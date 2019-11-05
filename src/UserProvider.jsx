@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { usePrevious } from '../base/hooks/usePrevious';
-import { getCurrentUser } from '../base/utils/getCurrentUser';
+import { usePrevious } from './hooks';
+import { getCurrentUser } from './auth/helpers';
 
 const UserContext = React.createContext({
   user: undefined,

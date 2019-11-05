@@ -1,7 +1,12 @@
 import React from 'react';
+import Lands from './Lands';
 
-const Home = () => {
-    return <div>HOME</div>
+const Home = (props) => {
+    return (
+      <div>
+        <Lands />
+      </div>
+    )
 }
 
 export default Home;
