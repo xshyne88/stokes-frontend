@@ -18,7 +18,7 @@ export const removeTokens = () => {
 export const login = (access, refresh, user) => {
     localStorage.setItem('access-token', access);
     localStorage.setItem('refresh-token', refresh);
-    localStorage.setItem('user', user);
+    localStorage.setItem('current-user', user);
 }
 
 export const getCurrentUser = () => {
@@ -48,3 +48,5 @@ export const isRefreshTokenValid = () => {
 
     return isTokenValid(token);
 };
+
+window.itv = isTokenValid

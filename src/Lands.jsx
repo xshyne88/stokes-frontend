@@ -15,9 +15,7 @@ const LANDS_QUERY = gql`
 `
 
 const AllLands = () => {
-    const { loading, error, data } = useQuery(LANDS_QUERY)
-    console.log(data)
-    console.error(error)
+    const { loading, error, data } = useQuery(LANDS_QUERY, {fetchPolicy: 'network-only'})
 
     if (error) return <div>error</div>
     if (loading) return <div>***LOADING****</div>
@@ -25,7 +23,6 @@ const AllLands = () => {
     if(data && data.lands.edges) {
       return data.lands.edges.map(l => <div key={l.node.name}>{l.node.name}</div>)
     }
-    return <div>not cool man</div>
 }
 
 export default AllLands;

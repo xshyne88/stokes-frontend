@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
     const history = useHistory();
 
     const handleLogout = () => history.push('/login');
-   console.log('here');
     return (
         <UserProvider
             onLogout={handleLogout}

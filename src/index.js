@@ -2,17 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import App from './App';
+import { fetchNewAccessToken } from './auth/fetchNewAccessToken';
+import { login } from './auth/helpers';
 
 const realApi = "http://localhost:3000/graphql";
 
 const httpLink = new HttpLink({ uri: realApi });
 
 const authLink = setContext((_, { headers }) => {
+  console.log('in auth link')
     const token = localStorage.getItem('access-token') || '';
     return {
         headers: {
@@ -26,9 +31,22 @@ const errorLink = onError(
     ({ graphQLErrors, networkError, operation, forward }) => {
         if (graphQLErrors) {
             graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+              console.log('extensions', extensions)
                 if (extensions && extensions.code) {
                     if (extensions.code === 'UNAUTHENTICATED') {
-                        operation.setContext({ attemptRefresh: true });
+                      const refreshToken = localStorage.getItem('refresh-token');
+                      const accessToken = localStorage.getItem('access-token');
+                      if (!refreshToken || !accessToken) return forward(operation);
+                        const token = fetchNewAccessToken(refreshToken)
+                          .then(t => {login(refreshToken, t, {}); return t})
+                          .catch(e => {console.error(e); forward(operation)})
+                            operation.setContext(({ headers = {} }) => ({
+                              headers: {
+                              ...headers,
+                              Authorization:
+                              token || headers.Authorization || undefined,
+                            },
+                          }));
                         return forward(operation);
                     } else if (extensions.code === 'UNAUTHORIZED') {
                         return;
@@ -42,15 +60,6 @@ const errorLink = onError(
 const client = new ApolloClient({
     link: ApolloLink.from([authLink, errorLink, httpLink]),
     cache: new InMemoryCache(),
-  request: (operation) => {
-      console.log('setting operations ...')
-  const token = localStorage.getItem('stokesToken')
-    operation.setContext({
-      headers: {
-        Authorization: token ? token : ''
-      }
-    })
-  }
 })
 
 const AppWithProvider = () => (

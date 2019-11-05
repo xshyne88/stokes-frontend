@@ -36,6 +36,8 @@ export const fetchNewAccessToken = (refreshToken) => {
       `,
     }),
   })
-    .then(response => response.json()) // convert to json
-    .then(extractAccessTokenFromResponse); // extract accessToken if available
+    .then(response => {console.log('got refreshtoken'); return response.json()})
+    // convert to json
+    .then(extractAccessTokenFromResponse) // extract accessToken if available
+    .catch(e => console.log(e));
 };
