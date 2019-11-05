@@ -7,8 +7,11 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import './index.css';
 import App from './App';
 
+const fakeData = "https://api.graph.cool/simple/v1/swapi"
+const realApi = "localhost:3000/graphql"
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'localhost:3000/graphql' }),
+  link: new HttpLink({ uri: fakeData }),
   cache: new InMemoryCache()
 });
 
