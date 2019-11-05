@@ -4,12 +4,9 @@ import gql from 'graphql-tag';
 import LoginForm from './LoginForm'
 const SIGN_IN_USER = gql`
   mutation signInUserMutation($input: SignInUserInput!) {
-    signInUser(email: $email) {
+    signInUser(input: $input) {
       accessToken
       refreshToken
-      errors {
-        messages
-      }
     }
   }
 `;
@@ -21,8 +18,7 @@ export default function Login() {
     {
       onCompleted({ login }) {
         localStorage.setItem('token', login);
-        client.writeData({ data: { isLoggedIn: true } });
-        console.log(login)
+          /* client.writeData({ data: { isLoggedIn: true } }); */
       }
     }
   );
