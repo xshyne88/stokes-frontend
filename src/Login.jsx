@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import LoginForm from "./LoginForm";
+import SignIn from "./SignIn";
 
 const SIGN_IN_USER = gql`
   mutation signInUserMutation($input: SignInUserInput!) {
@@ -25,5 +25,5 @@ export default function Login(props) {
   if (loading) return <div>**LOADING**</div>;
   if (error) return <p>An error occurred{console.log(error)}</p>;
 
-  return <LoginForm login={login} />;
+  return <SignIn login={login} />;
 }

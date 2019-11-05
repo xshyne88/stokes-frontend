@@ -1,8 +1,7 @@
 import jwtDecode from "jwt-decode";
 
 export const isTokenValid = token => {
-  if (!!token) return false;
-  console.log(token);
+  if (token === undefined || token === null) return false;
   const decodedToken = jwtDecode(token);
 
   if (!decodedToken) return false;
