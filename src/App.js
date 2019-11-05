@@ -1,17 +1,14 @@
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { client } from './base/apollo';
-import { renderRoutes } from 'react-router-config';
-import { routes } from './base/routes';
-import { AuthProvider } from './AuthProvider';
+import Login from './Login';
 
-export const App: React.FC = () => {
+const App = () => {
   return (
-    <ApolloProvider client={client}>
-        <Router>
-          <AuthProvider>{renderRoutes(routes)}</AuthProvider>
-        </Router>
-    </ApolloProvider>
+    <Router>
+      <Login />
+    </Router>
   );
 };
+
+export default App;
+
