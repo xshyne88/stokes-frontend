@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Login from "./Login";
 import Home from "./Home";
+import Admin from "./Admin";
 import Header from "./Header";
 import { AuthProvider } from "./AuthProvider";
 
@@ -13,7 +14,7 @@ const App = () => {
         <Header />
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <PrivateRoute exact path="/admin" />
+        <PrivateRoute exact path="/admin" component={Admin} />
       </AuthProvider>
     </Router>
   );

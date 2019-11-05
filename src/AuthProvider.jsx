@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <UserProvider
       onLogout={handleLogout}
+      history={history}
       isAuthenticated={isAccessTokenValid()}
     >
       {children}

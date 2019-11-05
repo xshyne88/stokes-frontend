@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
-import { usePrevious } from './hooks';
-import { getCurrentUser } from './auth/helpers';
+import React, { useState } from "react";
+import { usePrevious } from "./hooks";
+import { getCurrentUser } from "./auth/helpers";
 
 const UserContext = React.createContext({
   user: undefined,
-  setUser: () => {},
+  setUser: () => {}
 });
 
-const getCachedUserIfAuthenticated = (isAuthenticated) => {
+const getCachedUserIfAuthenticated = isAuthenticated => {
   if (!isAuthenticated) return undefined;
 
   return getCurrentUser();
 };
 
-const UserProvider = ({
-  onLogin,
-  onLogout,
-  isAuthenticated,
-  children,
-}) => {
+const UserProvider = ({ onLogin, onLogout, isAuthenticated, children }) => {
   const cachedUser = getCachedUserIfAuthenticated(isAuthenticated);
 
   const [user, setUser] = useState(cachedUser);

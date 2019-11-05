@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import Lands from "./Lands";
+import React from "react";
 
 const Home = props => {
-  const [toggle, setToggle] = useState(false);
   return (
-    <div>
-      <button onClick={() => setToggle(!toggle)}>toggle</button>
-      {toggle && <Lands />}
+    <div style={{ height: "50%", width: "50%" }}>
+      <h1>Stokes Graveyard</h1>
     </div>
   );
 };
