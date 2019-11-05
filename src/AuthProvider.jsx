@@ -1,18 +1,18 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { isAccessTokenValid } from './auth/helpers';
-import { UserProvider } from './UserProvider';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { isAccessTokenValid } from "./auth/helpers";
+import { UserProvider } from "./UserProvider";
 
 export const AuthProvider = ({ children }) => {
-    const history = useHistory();
+  const history = useHistory();
 
-    const handleLogout = () => history.push('/login');
-    return (
-        <UserProvider
-            onLogout={handleLogout}
-            isAuthenticated={isAccessTokenValid()}
-        >
-            {children}
-        </UserProvider>
-    );
+  const handleLogout = () => history.push("/login");
+  return (
+    <UserProvider
+      onLogout={handleLogout}
+      isAuthenticated={isAccessTokenValid()}
+    >
+      {children}
+    </UserProvider>
+  );
 };
