@@ -30,7 +30,7 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(
     ({ graphQLErrors, networkError, operation, forward }) => {
         if (graphQLErrors) {
-            graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+            graphQLErrors.forEach(({ extensions }) => {
               console.log('extensions', extensions)
                 if (extensions && extensions.code) {
                     if (extensions.code === 'UNAUTHENTICATED') {
