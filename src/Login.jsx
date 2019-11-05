@@ -2,11 +2,15 @@ import React from 'react';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import LoginForm from './LoginForm'
+
 const SIGN_IN_USER = gql`
   mutation signInUserMutation($input: SignInUserInput!) {
     signInUser(input: $input) {
       accessToken
       refreshToken
+      errors {
+      message
+      }
     }
   }
 `;
@@ -16,9 +20,9 @@ export default function Login() {
   const [login, { loading, error }] = useMutation(
     SIGN_IN_USER,
     {
-      onCompleted({ login }) {
-        localStorage.setItem('token', login);
-          /* client.writeData({ data: { isLoggedIn: true } }); */
+      onCompleted({ signInUser }) {
+      localStorage.setItem('access-token', signInUser.accessToken);
+      localStorage.setItem('refresh-token', signInUser.accessToken);
       }
     }
   );
