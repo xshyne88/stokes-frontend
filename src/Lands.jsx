@@ -1,6 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+// this comment triggered a buddy action
 
 const LANDS_QUERY = gql`
   query landsQuery {
