@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AllLands from "./Lands";
+import { UserContext } from "./UserProvider";
 
 const Home = props => {
+  const userContext = useContext(UserContext);
+
   const [showLands, toggleButton] = useState(false);
   return (
     <div style={{ height: "50%", width: "50%" }}>
