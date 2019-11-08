@@ -23,9 +23,7 @@ const AllLands = () => {
   if (loading) return <div>***LOADING**** </div>;
 
   if (data && data.lands.edges) {
-    return data.lands.edges.map(l => (
-      <div key={l.node.name}>{l.node.name}</div>
-    ));
+    return data.lands.edges.map(l => <h3 key={l.node.name}>{l.node.name}</h3>);
   }
 };
 
