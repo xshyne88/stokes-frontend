@@ -12,19 +12,22 @@ import App from "./App";
 import { fetchNewAccessToken } from "./auth/fetchNewAccessToken";
 import { login } from "./auth/helpers";
 
-const realApi = "stokes-graveyard.cf/graphql";
+const realApi = "http://stokes-graveyard.cf/graphql";
 
 const httpLink = new HttpLink({ uri: realApi });
 
 const authLink = setContext((_, { headers }) => {
-  console.log("in auth link");
   const token = localStorage.getItem("access-token") || "";
-  return {
-    headers: {
-      ...headers,
-      Authorization: token
-    }
-  };
+  console.log(token, "token in authlink");
+  if (token === "null" || token === "undefined") return { headers: headers };
+  if (token) {
+    return {
+      headers: {
+        ...headers,
+        Authorization: token
+      }
+    };
+  }
 });
 
 const errorLink = onError(

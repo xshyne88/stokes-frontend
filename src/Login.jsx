@@ -18,8 +18,10 @@ const SIGN_IN_USER = gql`
 export default function Login(props) {
   const [login, { loading, error }] = useMutation(SIGN_IN_USER, {
     onCompleted({ signInUser }) {
-      localStorage.setItem("access-token", signInUser.accessToken);
-      localStorage.setItem("refresh-token", signInUser.refreshToken);
+      if (signInUser.accessToken && signInUser.refreshToken) {
+        localStorage.setItem("access-token", signInUser.accessToken);
+        localStorage.setItem("refresh-token", signInUser.refreshToken);
+      }
     }
   });
   if (loading) return <div>**LOADING**</div>;
