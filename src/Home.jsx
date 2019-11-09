@@ -1,8 +1,16 @@
-import React from "react";
-import AllLands from "./Lands";
+import React, { useState } from "react";
+// import SplitPane from "react-split-pane";
+import Map from "./Map";
+import LandDetails from "./LandDetails";
 
 const Home = props => {
-  return <AllLands />;
+  const [activeId, setActiveLand] = useState(null);
+  return (
+    <div style={{ display: "flex" }}>
+      <Map setActiveLand={setActiveLand} />
+      <LandDetails landId={activeId} />
+    </div>
+  );
 };
 
 export default Home;
