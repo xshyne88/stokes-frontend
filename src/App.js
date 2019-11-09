@@ -6,14 +6,16 @@ import Home from "./Home";
 import Admin from "./Admin";
 import Header from "./Header";
 import { AuthProvider } from "./AuthProvider";
+import Logout from "./Logout";
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <Header />
-        <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
+        <PrivateRoute exact path="/home" component={Home} />
         <PrivateRoute exact path="/admin" component={Admin} />
       </AuthProvider>
     </Router>

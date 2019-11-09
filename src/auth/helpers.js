@@ -38,6 +38,7 @@ export const isAccessTokenValid = () => {
   const token = localStorage.getItem("access-token");
 
   if (!token) return false;
+  if (token === "undefined" || token === "null") return false;
 
   return isTokenValid(token);
 };

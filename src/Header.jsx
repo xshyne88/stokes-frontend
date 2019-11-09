@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./UserProvider";
 
 const Header = () => {
+  const { user } = useContext(UserContext);
   return (
     <>
       <div>HEADER</div>
       <ul>
         <li>
-          <Link to="/">Home Page</Link>
+          <Link to="/home">Home Page</Link>
         </li>
         <li>
-          <Link to="/login">Login Page</Link>
+          {user ? (
+            <Link to="/logout">Logout</Link>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </li>
         <li>
           <Link to="/admin">Admin Page</Link>

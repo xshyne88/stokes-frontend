@@ -18,7 +18,6 @@ const httpLink = new HttpLink({ uri: realApi });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("access-token") || "";
-  console.log(token, "token in authlink");
   if (token === "null" || token === "undefined") return { headers: headers };
   if (token) {
     return {
@@ -34,7 +33,6 @@ const errorLink = onError(
   ({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       graphQLErrors.forEach(({ extensions }) => {
-        console.log("extensions", extensions);
         if (extensions && extensions.code) {
           if (extensions.code === "UNAUTHENTICATED") {
             const refreshToken = localStorage.getItem("refresh-token");
