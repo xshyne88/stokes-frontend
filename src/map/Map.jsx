@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactMapGL from "react-map-gl";
-import { AllLands } from "./Lands";
+import { AllLands } from "../Lands";
 
 const [defaultLatitude, defaultLongitude] = [28.51356, -81.428717];
 export default ({ setActiveLand }) => {

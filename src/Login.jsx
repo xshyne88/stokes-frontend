@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import SignIn from "./SignIn";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "./UserProvider";
-import { Loading } from "./Spinners";
+import { Loading } from "./components/Spinners";
 import { isAccessTokenValid } from "./auth/helpers";
 
 const SIGN_IN_USER = gql`

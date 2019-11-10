@@ -6,7 +6,7 @@ import AreasIcon from "@material-ui/icons/VerticalSplitSharp";
 import MapIcon from "@material-ui/icons/CropOriginalSharp";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
-import { UserContext } from "./UserProvider";
+import { UserContext } from "../UserProvider";
 
 const useStyles = makeStyles({
   root: {

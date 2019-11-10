@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 // import { Link } from "react-router-dom";
-import { UserContext } from "./UserProvider";
+import { UserContext } from "../UserProvider";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ScrollHider from "./ScrollHider";
+import ScrollHider from "../ScrollHider";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import dayjs, { Dayjs } from "dayjs";

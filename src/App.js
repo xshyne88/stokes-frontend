@@ -1,17 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 import Login from "./Login";
-import HomeMap from "./HomeMap";
-import Admin from "./Admin";
-import Header from "./Header";
+import HomeMap from "./map/HomeMap";
+import Admin from "./admin/Admin";
+import Header from "./headerfooter/Header";
 import { AuthProvider } from "./AuthProvider";
 import Logout from "./Logout";
-import BottomNavigation from "./BottomNavigation";
-import "./App.css";
+import BottomNavigation from "./headerfooter/BottomNavigation";
 import NoMatch from "./NoMatch";
-
-// heroku comment
+import Account from "./account/Account";
+import Areas from "./areas/Areas";
 
 const App = () => {
   return (
@@ -22,12 +21,12 @@ const App = () => {
           <Route exact path="/" component={Login} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/logout" component={Logout} />
+          <PrivateRoute exact path="/map" component={HomeMap} />
+          <PrivateRoute exact path="/areas" component={Areas} />
+          <PrivateRoute exact path="/admin" component={Admin} />
+          <PrivateRoute exact path="/account" component={Account} />
           <Route component={NoMatch} />
         </Switch>
-        <PrivateRoute exact path="/map" component={HomeMap} />
-        <PrivateRoute exact path="/admin" component={Admin} />
-        <PrivateRoute exact path="/account" component={HomeMap} />
-        <PrivateRoute exact path="/admin" component={Admin} />
         <BottomNavigation />
       </AuthProvider>
     </Router>
