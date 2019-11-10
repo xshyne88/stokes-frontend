@@ -72,8 +72,8 @@ const Login = props => {
 
   if (loading) return <Loading />;
   if (error) return <p>An error occurred{console.log(error)}</p>;
-  if (data) return <Redirect to="/map" />;
-  return user ? <Redirect to="/map" /> : <SignIn login={login} />;
+  if (data) return <Redirect to="/areas" />;
+  return user ? <Redirect to="/areas" /> : <SignIn login={login} />;
 };
 
 export default CheckTokensAndDoLogin;

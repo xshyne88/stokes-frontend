@@ -10,6 +10,9 @@ import { UserContext } from "../UserProvider";
 
 const useStyles = makeStyles({
   root: {
+    width: "100%",
+    bottom: 0,
+    position: "fixed",
     display: "flex",
     justifyContent: "space-around",
     alignContent: "center",

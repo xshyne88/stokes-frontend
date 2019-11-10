@@ -18,6 +18,13 @@ const LANDS_QUERY = gql`
   }
 `;
 
+export const LandsForCards = props => {
+  const { loading, error, data } = useQuery(LANDS_QUERY);
+
+  if (error) return <div>error</div>;
+  if (loading) return <div>***LOADING****</div>;
+};
+
 export const AllLands = ({ marker, markerProps }) => {
   const { loading, error, data } = useQuery(LANDS_QUERY);
 
@@ -36,10 +43,10 @@ export const AllLands = ({ marker, markerProps }) => {
   return <div>No lands have been created</div>;
 };
 
-const DisplayComp = () => <div>nothing</div>;
+const LandCards = () => null;
 
 const LandDisplay = ({ lands, marker, markerProps }) => {
-  const Component = marker ? LandMarker : DisplayComp;
+  const Component = marker ? LandMarker : LandCards;
   return lands.reduce((acc, land) => {
     if (!land.node.latitude || !land.node.longitude) return acc;
     return [
@@ -51,6 +58,7 @@ const LandDisplay = ({ lands, marker, markerProps }) => {
         latitude={land.node.latitude}
         name={land.node.name}
         landId={land.node.id}
+        land={land.node}
       />
     ];
   }, []);
