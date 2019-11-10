@@ -45,7 +45,7 @@ export default () => {
   const { loading, error, data } = useQuery(LANDS_QUERY);
 
   if (error) return <AreasLoadError />;
-  if (loading) return <AreasLoading />;
+  if (true) return <AreasLoading />;
 
   const lands = prune(data).lands;
 
