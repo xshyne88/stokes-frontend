@@ -57,6 +57,7 @@ export default props => {
             <OpenInBrowserIcon />
           </IconButton>
         }
+        title={props.land.name}
         subheader={dayJs().format("MMMM D, YYYY")}
       />
       <CardContent>

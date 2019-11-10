@@ -18,13 +18,6 @@ const LANDS_QUERY = gql`
   }
 `;
 
-export const LandsForCards = props => {
-  const { loading, error, data } = useQuery(LANDS_QUERY);
-
-  if (error) return <div>error</div>;
-  if (loading) return <div>***LOADING****</div>;
-};
-
 export const AllLands = ({ marker, markerProps }) => {
   const { loading, error, data } = useQuery(LANDS_QUERY);
 
