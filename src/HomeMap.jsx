@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Map from "./Map";
 import LandDetails from "./LandDetails";
 
-const Home = props => {
+const HomeMap = props => {
   const [activeId, setActiveLand] = useState(null);
   return (
     <div style={{ display: "flex" }}>
@@ -13,4 +13,4 @@ const Home = props => {
   );
 };
 
-export default Home;
+export default HomeMap;
