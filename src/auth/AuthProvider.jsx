@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { isAccessTokenValid } from "./auth/helpers";
-import { UserProvider } from "./UserProvider";
+import { isAccessTokenValid } from "./helpers";
+import { UserProvider } from "../UserProvider";
 
 export const AuthProvider = ({ children }) => {
   const history = useHistory();

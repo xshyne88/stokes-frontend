@@ -3,9 +3,9 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import SignIn from "./SignIn";
 import { Redirect } from "react-router-dom";
-import { UserContext } from "./UserProvider";
-import { Loading } from "./components/Spinners";
-import { isAccessTokenValid } from "./auth/helpers";
+import { UserContext } from "../UserProvider";
+import { Loading } from "../components/Spinners";
+import { isAccessTokenValid } from "./helpers";
 
 const SIGN_IN_USER = gql`
   mutation signInUserMutation($input: SignInUserInput!) {

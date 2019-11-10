@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "./UserProvider";
+import { UserContext } from "../UserProvider";
 import { Redirect } from "react-router-dom";
 
 const Logout = () => {
