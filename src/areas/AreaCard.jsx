@@ -13,6 +13,9 @@ import { red } from "@material-ui/core/colors";
 import dayJs from "dayjs";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 
 const useStyles = makeStyles(theme => ({
   card: { width: "100%" },
@@ -31,7 +34,16 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: red[500],
+    height: 20
+  },
+  active: {
+    backgroundColor: "palevioletred",
+    marginRight: 10
+  },
+  inActive: {
+    backgroundColor: "lightGreen",
+    marginRight: 10
   }
 }));
 
@@ -48,9 +60,10 @@ export default props => {
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {name}
-          </Avatar>
+          <div>
+            Status
+            <Avatar aria-label="name" className={classes.avatar}></Avatar>
+          </div>
         }
         action={
           <IconButton aria-label="settings">
@@ -61,9 +74,14 @@ export default props => {
         subheader={dayJs().format("MMMM D, YYYY")}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Loren bacon ipsum and more dude
-        </Typography>
+        <RestoreFromTrashIcon className={classes.active} />
+        <AccessTimeIcon className={classes.inActive} />
+        <NaturePeopleIcon className={classes.active} />
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        ></Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
