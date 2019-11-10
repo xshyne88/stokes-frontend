@@ -6,7 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import ScrollHider from "../ScrollHider";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const Header = props => {
   const { user } = useContext(UserContext);
