@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import LandMarker from "../map/LandMarker";
+import LandMarker from "./map/LandMarker";
 
 const LANDS_QUERY = gql`
   query landsQuery {

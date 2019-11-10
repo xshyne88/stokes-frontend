@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../UserProvider";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ScrollHider from "../ScrollHider";
+import ScrollHider from "../components/ScrollHider";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";

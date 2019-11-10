@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
-import Login from "./Login";
+import Login from "./auth/Login";
 import HomeMap from "./map/HomeMap";
 import Admin from "./admin/Admin";
 import Header from "./headerfooter/Header";
-import { AuthProvider } from "./AuthProvider";
-import Logout from "./Logout";
+import { AuthProvider } from "./auth/AuthProvider";
+import Logout from "./auth/Logout";
 import BottomNavigation from "./headerfooter/BottomNavigation";
-import NoMatch from "./NoMatch";
+import NoMatch from "./routes/NoMatch";
 import Account from "./account/Account";
 import Areas from "./areas/Areas";
 
