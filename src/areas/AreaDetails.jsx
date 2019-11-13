@@ -17,6 +17,19 @@ const LAND_QUERY = gql`
       landDuties {
         edges {
           node {
+            userLandDuties {
+              edges {
+                node {
+                  id
+                  completedAt
+                  landDuty {
+                    duty {
+                      id
+                    }
+                  }
+                }
+              }
+            }
             id
             estimatedDays
             duty {
@@ -29,6 +42,7 @@ const LAND_QUERY = gql`
     }
   }
 `;
+
 export default props => {
   const landId = props.match.params.id;
   const { loading, error, data } = useQuery(LAND_QUERY, {
@@ -39,10 +53,11 @@ export default props => {
   if (loading) return <AreasLoadError />;
 
   if (data && data.land) {
+    const { land } = data;
     return (
       <div>
-        <Area area={data.land} />
-        <AreaDuties landDuties={prune(data.land.landDuties)} />
+        <Area area={land} />
+        <AreaDuties landDuties={prune(land.landDuties)} />
       </div>
     );
   }
