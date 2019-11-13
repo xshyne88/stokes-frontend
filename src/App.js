@@ -11,6 +11,7 @@ import BottomNavigation from "./headerfooter/BottomNavigation";
 import NoMatch from "./routes/NoMatch";
 import Account from "./account/Account";
 import Areas from "./areas/Areas";
+import AreaDetails from "./areas/AreaDetails";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route exact path="/logout" component={Logout} />
           <PrivateRoute exact path="/map" component={HomeMap} />
           <PrivateRoute exact path="/areas" component={Areas} />
+          <PrivateRoute exact path="/areas/:id" component={AreaDetails} />
           <PrivateRoute exact path="/admin" component={Admin} />
           <PrivateRoute exact path="/account" component={Account} />
           <Route component={NoMatch} />

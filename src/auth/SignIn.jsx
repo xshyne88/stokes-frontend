@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -104,7 +103,18 @@ const LoginForm = props => {
             <Grid item></Grid>
           </Grid>
         </form>
-        <img style={{ margin: 16, maxHeight: 150, width: "100%" }} src={logo} />
+        <img
+          alt="whatever"
+          style={{ margin: 16, maxHeight: 150, width: "100%" }}
+          src={logo}
+        />
+      </div>
+      <div>
+        guest credentials
+        <br />
+        username: chase@chase.com
+        <br />
+        password: abc12345
       </div>
     </Container>
   );

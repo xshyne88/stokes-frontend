@@ -52,7 +52,7 @@ export default () => {
     <List className={classes.root}>
       <ListItem className={classes.listItem}>
         {lands.map(land => (
-          <AreaCard land={land} />
+          <AreaCard key={land.id} land={land} />
         ))}
       </ListItem>
     </List>

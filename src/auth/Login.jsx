@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import SignIn from "./SignIn";
@@ -50,18 +50,14 @@ const getOldTokens = () => {
 const javascriptSucks = val => val !== "null" && val !== "undefined" && val;
 const nonNull = val => javascriptSucks(val);
 
-const CheckTokensAndDoLogin = props => {
-  const { setUser } = useContext(UserContext);
-
-  const oldTokens = getOldTokens();
-  if (oldTokens && isAccessTokenValid(oldTokens.accessToken)) {
-    setUser(oldTokens.user);
-  }
-  return <Login {...props} />;
-};
-
 const Login = props => {
   const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    const oldTokens = getOldTokens();
+    if (oldTokens && isAccessTokenValid(oldTokens.accessToken)) {
+      setUser(oldTokens.user);
+    }
+  }, [setUser]);
 
   const [login, { loading, error, data }] = useMutation(SIGN_IN_USER, {
     onCompleted({ signInUser }) {
@@ -70,10 +66,11 @@ const Login = props => {
     }
   });
 
+  if (user) return <Redirect to="/areas" />;
   if (loading) return <Loading />;
   if (error) return <p>An error occurred{console.log(error)}</p>;
   if (data) return <Redirect to="/areas" />;
-  return user ? <Redirect to="/areas" /> : <SignIn login={login} />;
+  return <SignIn login={login} />;
 };
 
-export default CheckTokensAndDoLogin;
+export default Login;

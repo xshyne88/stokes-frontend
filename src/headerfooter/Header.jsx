@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { UserContext } from "../UserProvider";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,30 +8,33 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";
 
+import GoBack from "./GoBack";
+
 const Header = props => {
   const { user } = useContext(UserContext);
-  if (user) {
-    return (
-      <>
-        <CssBaseline />
-        <ScrollHider {...props}>
-          <AppBar>
-            <Toolbar>
-              <Typography variant="h6">
-                Todo List for {dayjs().format("M-D-YY")}
-              </Typography>
-            </Toolbar>
-          </AppBar>
-        </ScrollHider>
-        <Toolbar />
-      </>
-    );
-  } else {
-    return null;
-  }
+  return user ? (
+    <>
+      <CssBaseline />
+      <ScrollHider {...props}>
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h6">{getNameFromRoute(props)} </Typography>
+          </Toolbar>
+        </AppBar>
+      </ScrollHider>
+      <Toolbar />
+    </>
+  ) : null;
 };
 
-export default Header;
+const getNameFromRoute = props => {
+  if (props.location.pathname.match(/\/areas\/.+/)) {
+    return <GoBack history={props.history} />;
+  }
+  return `Todo List for ${dayjs().format("M-D-YY")}`;
+};
+
+export default withRouter(Header);
 
 // return (
 //     <>
