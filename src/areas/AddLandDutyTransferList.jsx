@@ -108,7 +108,6 @@ export default ({ land }) => {
       <Divider />
       <List className={classes.list} dense component="div" role="list">
         {items.map(value => {
-          console.log(value);
           const labelId = `transfer-list-all-item-${value}-label`;
 
           return (
@@ -126,7 +125,10 @@ export default ({ land }) => {
                   inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={value.duty.name || "unk"} />
+              <ListItemText
+                id={labelId}
+                primary={(value && value.duty && value.duty.name) || "unk"}
+              />
             </ListItem>
           );
         })}
