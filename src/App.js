@@ -18,10 +18,10 @@ const App = () => {
     <Router>
       <AuthProvider>
         <Header />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/logout" component={Logout} />
           <PrivateRoute exact path="/map" component={HomeMap} />
           <PrivateRoute exact path="/areas/:id" component={AreaDetails} />
           <PrivateRoute exact path="/areas" component={Areas} />

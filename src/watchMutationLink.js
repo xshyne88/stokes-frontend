@@ -47,6 +47,21 @@ export default cache =>
         }
       }
     }
+    // AssignLandDutiesMutation: {
+    //   landDetailsQuery: ({ mutation, query }) => {
+    //     try {
+    //       const newEdges = query.result.
+    //       );
+    //       return produce(query.result, draftResult => {
+    //         const landDutyId = mutation.variables.input.landDutyId;
+    //         draftResult.land.landDuties.edges = newEdges
+    //       });
+    //     } catch (e) {
+    //       console.error(e);
+    //       return query.result;
+    //     }
+    //   }
+    // },
   });
 
 //   ReturnBook: {

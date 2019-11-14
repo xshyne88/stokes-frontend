@@ -17,6 +17,7 @@ import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
+import { Chip } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   card: { width: "100%" },
@@ -39,11 +40,11 @@ const useStyles = makeStyles(theme => ({
     height: 35
   },
   active: {
-    backgroundColor: "palevioletred",
+    // backgroundColor: "palevioletred",
     marginRight: 10
   },
   inActive: {
-    backgroundColor: "lightGreen",
+    // backgroundColor: "lightGreen",
     marginRight: 10
   }
 }));
@@ -74,6 +75,9 @@ export default props => {
         subheader={dayJs().format("MMMM D, YYYY")}
       />
       <CardContent>
+        {props.land.landDuties.map(ld => (
+          <Chip style={{ color: "green" }} avatar={<OpenInBrowserIcon />} />
+        ))}
         <RestoreFromTrashIcon className={classes.active} />
         <AccessTimeIcon className={classes.inActive} />
         <NaturePeopleIcon className={classes.active} />
