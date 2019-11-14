@@ -7,6 +7,7 @@ import MapIcon from "@material-ui/icons/CropOriginalSharp";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserProvider";
+import HistoryIcon from "@material-ui/icons/History";
 
 const useStyles = makeStyles({
   root: {
@@ -25,9 +26,7 @@ export default props => {
   const classes = useStyles();
   const [value, setValue] = React.useState("recents");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => {};
 
   const { user } = useContext(UserContext);
   if (user) {
@@ -61,6 +60,15 @@ export default props => {
           className={classes.childButtons}
           component={Link}
         />
+        <BottomNavigationAction
+          label="Admin"
+          value="admin"
+          to="/admin"
+          icon={<HistoryIcon />}
+          className={classes.childButtons}
+          component={Link}
+        />
+        )
       </BottomNavigation>
     );
   } else return null;

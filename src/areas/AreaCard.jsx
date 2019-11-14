@@ -13,10 +13,12 @@ import Typography from "@material-ui/core/Typography";
 import { orange } from "@material-ui/core/colors";
 import dayJs from "dayjs";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Icon from "@material-ui/core/Icon";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { Chip } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -46,8 +48,14 @@ const useStyles = makeStyles(theme => ({
   inActive: {
     // backgroundColor: "lightGreen",
     marginRight: 10
+  },
+  activeChip: {
+    backgroundColor: "#fff",
+    textShadow: "0 0 20px #ff05b"
   }
 }));
+
+const c = ["AccessTime", "RestoreFromTrash", "NaturePeople"];
 
 export default props => {
   // const name = (props && props.land && props.land.name) || "A";
@@ -76,11 +84,16 @@ export default props => {
       />
       <CardContent>
         {props.land.landDuties.map(ld => (
-          <Chip style={{ color: "green" }} avatar={<OpenInBrowserIcon />} />
+          <Chip
+            className={classes.activeChip}
+            key={ld.id}
+            avatar={<FiberManualRecordIcon style={{ fill: "green" }} />}
+            label={<Icon>flag</Icon>}
+          />
         ))}
-        <RestoreFromTrashIcon className={classes.active} />
+        {/* <RestoreFromTrashIcon className={classes.active} />
         <AccessTimeIcon className={classes.inActive} />
-        <NaturePeopleIcon className={classes.active} />
+        <NaturePeopleIcon className={classes.active} /> */}
         <Typography
           variant="body2"
           color="textSecondary"

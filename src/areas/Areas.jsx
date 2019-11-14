@@ -8,6 +8,8 @@ import AreasLoadError from "./AreasLoadError.jsx";
 import AreasLoading from "./AreasLoading.jsx";
 import prune from "../prune";
 import LANDS_QUERY from "../graphql/queries/landsQuery";
+import DatePicker from "../components/DatePicker";
+import IconPicker from "../components/IconPicker";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,6 +42,7 @@ export default () => {
           <AreaCard key={land.id} land={land} />
         ))}
       </ListItem>
+      <IconPicker />
     </List>
   );
 };
