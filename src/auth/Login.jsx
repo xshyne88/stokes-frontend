@@ -1,27 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import SignIn from "./SignIn";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "../UserProvider";
 import { Loading } from "../components/Spinners";
 import { isAccessTokenValid } from "./helpers";
-
-const SIGN_IN_USER = gql`
-  mutation signInUserMutation($input: SignInUserInput!) {
-    signInUser(input: $input) {
-      accessToken
-      refreshToken
-      errors {
-        message
-      }
-      user {
-        id
-        email
-      }
-    }
-  }
-`;
+import SIGN_IN_USER from "../graphql/mutations/signInUserMutation";
 
 const setTokens = signInResponse => {
   const { accessToken, refreshToken, user } = signInResponse;

@@ -14,12 +14,11 @@ const extractAccessTokenFromResponse = refreshResponse => {
 export const fetchNewAccessToken = refreshToken => {
   const url = "http://localhost:3000/graphql";
 
-  return (
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
+  return fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
         mutation {
           refreshTokens(input: {
             refreshToken: "${refreshToken}"
@@ -33,14 +32,11 @@ export const fetchNewAccessToken = refreshToken => {
           }
         }
       `
-      })
     })
-      .then(response => {
-        console.log("got refreshtoken");
-        return response.json();
-      })
-      // convert to json
-      .then(extractAccessTokenFromResponse) // extract accessToken if available
-      .catch(e => console.log(e))
-  );
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(extractAccessTokenFromResponse)
+    .catch(e => console.log(e));
 };

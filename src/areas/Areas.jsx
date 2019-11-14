@@ -1,6 +1,5 @@
 import React from "react";
 import AreaCard from "./AreaCard";
-import gql from "graphql-tag";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -8,22 +7,7 @@ import { useQuery } from "@apollo/react-hooks";
 import AreasLoadError from "./AreasLoadError.jsx";
 import AreasLoading from "./AreasLoading.jsx";
 import prune from "../prune";
-
-const LANDS_QUERY = gql`
-  query landsQuery {
-    lands {
-      edges {
-        node {
-          id
-          name
-          latitude
-          longitude
-          updatedAt
-        }
-      }
-    }
-  }
-`;
+import LANDS_QUERY from "../graphql/queries/landsQuery";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +31,7 @@ export default () => {
   if (loading) return <AreasLoading />;
 
   const lands = prune(data).lands;
+  console.log(lands);
 
   return (
     <List className={classes.root}>

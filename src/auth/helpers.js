@@ -50,5 +50,3 @@ export const isRefreshTokenValid = () => {
 
   return isTokenValid(token);
 };
-
-window.itv = isTokenValid;

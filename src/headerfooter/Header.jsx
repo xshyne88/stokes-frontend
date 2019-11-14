@@ -35,24 +35,3 @@ const getNameFromRoute = props => {
 };
 
 export default withRouter(Header);
-
-// return (
-//     <>
-//       <div>HEADER</div>
-//       <ul>
-//         <li>
-//           <Link to="/home">Home Page</Link>
-//         </li>
-//         <li>
-//           {user ? (
-//             <Link to="/logout">Logout</Link>
-//           ) : (
-//             <Link to="/login">Login</Link>
-//           )}
-//         </li>
-//         <li>
-//           <Link to="/admin">Admin Page</Link>
-//         </li>
-//       </ul>
-//     </>
-//   );
