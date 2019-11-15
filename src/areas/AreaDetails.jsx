@@ -9,7 +9,7 @@ import prune from "../prune";
 import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
 import AddCircle from "@material-ui/icons/AddCircle";
 // import { UserContext } from "../UserProvider";
-import AddAreaLandDutiesDialog from "./AddAreaLandDutiesDialog";
+import AddAreaLandDutiesDialog from "./dialogs/AddAreaLandDutiesDialog";
 
 export default props => {
   // const { user } = useContext(UserContext);

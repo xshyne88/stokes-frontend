@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import AreaDutyDescriptionDialog from "./AreaDutyDescriptionDialog";
+import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
 import { getISONow, getUserId } from "../helpers";
