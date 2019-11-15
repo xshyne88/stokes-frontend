@@ -23,7 +23,7 @@ export const login = (access, refresh, user) => {
 };
 
 export const getCurrentUser = () => {
-  const currentUserString = localStorage.getItem("current-user");
+  const currentUserString = localStorage.getItem("user");
   if (!currentUserString) return undefined;
 
   try {
