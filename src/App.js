@@ -17,20 +17,16 @@ const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <Header />
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
-        <Switch>
-          <PrivateRoute exact path="/map" component={HomeMap} />
-          <PrivateRoute exact path="/areas/:id" component={AreaDetails} />
-          <PrivateRoute exact path="/areas" component={Areas} />
-          <PrivateRoute exact path="/admin" component={Admin} />
-          <PrivateRoute exact path="/account" component={Account} />
-          <PrivateRoute exact path="/logout" component={Logout} />
-          <Route component={NoMatch} />
-        </Switch>
-        <BottomNavigation />
+        <PrivateRoute exact path="/map" component={HomeMap} />
+        <PrivateRoute exact path="/areas/:id" component={AreaDetails} />
+        <PrivateRoute exact path="/areas" component={Areas} />
+        <PrivateRoute exact path="/admin" component={Admin} />
+        <PrivateRoute exact path="/account" component={Account} />
+        <PrivateRoute exact path="/logout" component={Logout} />
+        {/* <Route component={NoMatch} /> */}
       </AuthProvider>
     </Router>
   );
