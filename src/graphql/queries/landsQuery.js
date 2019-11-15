@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { landFragment } from "../fragments/landFragment";
+import landFragment from "../fragments/landFragment";
 
 export default gql`
   query landsQuery {

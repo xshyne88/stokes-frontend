@@ -1,15 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
 import Select from "react-select";
 import { emphasize, makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-import Chip from "@material-ui/core/Chip";
 import MenuItem from "@material-ui/core/MenuItem";
-import CancelIcon from "@material-ui/icons/Cancel";
 import icons from "../icons";
 
 const labeledIcons = icons.map(icon => ({

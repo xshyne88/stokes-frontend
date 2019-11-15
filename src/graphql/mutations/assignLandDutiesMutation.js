@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { userLandDutyFragment } from "../fragments/userLandDutyFragment";
+import { completedDutyFragment } from "../fragments/completedDutyFragment";
 
 export default gql`
   mutation($input: AssignLandDutiesInput!) {
@@ -11,10 +11,10 @@ export default gql`
       landDuties {
         edges {
           node {
-            userLandDuties {
+            completedDuties {
               edges {
                 node {
-                  ...UserLandDutyFragment
+                  ...completedDutyFragment
                 }
               }
             }
@@ -30,5 +30,5 @@ export default gql`
       }
     }
   }
-  ${userLandDutyFragment}
+  ${completedDutyFragment}
 `;

@@ -13,11 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { orange } from "@material-ui/core/colors";
 import dayJs from "dayjs";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Icon from "@material-ui/core/Icon";
+// import Icon from "@material-ui/core/Icon";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
+// import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
+// import AccessTimeIcon from "@material-ui/icons/AccessTime";
+// import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { Chip } from "@material-ui/core";
 
@@ -55,16 +55,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const c = ["AccessTime", "RestoreFromTrash", "NaturePeople"];
+const ellipsify = (name, length = 10) => {
+  if (name.length >= length) {
+    return `${name.slice(0, length)}..`;
+  } else {
+    return name;
+  }
+};
 
 export default props => {
-  // const name = (props && props.land && props.land.name) || "A";
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const { lastCompletedDuty } = props.land;
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -79,8 +86,17 @@ export default props => {
             <OpenInBrowserIcon />
           </IconButton>
         }
-        title={<Link to={`areas/${props.land.id}`}>{props.land.name}</Link>}
-        subheader={dayJs().format("MMMM D, YYYY")}
+        title={
+          <div>
+            <Link to={`areas/${props.land.id}`}>{props.land.name}</Link>
+            {lastCompletedDuty && (
+              <div style={{ display: "flex" }}>
+                <i>Last Completed Duty: </i>
+                <div style={{ marginLeft: 10 }}>{lastCompletedDuty}</div>
+              </div>
+            )}
+          </div>
+        }
       />
       <CardContent>
         {props.land.landDuties.map(ld => (
@@ -88,12 +104,9 @@ export default props => {
             className={classes.activeChip}
             key={ld.id}
             avatar={<FiberManualRecordIcon style={{ fill: "green" }} />}
-            label={<Icon>flag</Icon>}
+            label={ellipsify(ld.duty.name)}
           />
         ))}
-        {/* <RestoreFromTrashIcon className={classes.active} />
-        <AccessTimeIcon className={classes.inActive} />
-        <NaturePeopleIcon className={classes.active} /> */}
         <Typography
           variant="body2"
           color="textSecondary"

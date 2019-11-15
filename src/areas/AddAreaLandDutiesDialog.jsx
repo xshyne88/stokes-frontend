@@ -8,18 +8,7 @@ import {
   Divider,
   Button
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import AddLandDutyTransferList from "./AddLandDutyTransferList";
-
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: "relative"
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1
-  }
-}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

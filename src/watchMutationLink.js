@@ -6,39 +6,40 @@ const createEdge = (node, typename) => ({ node, __typename: typename });
 
 export default cache =>
   new WatchedMutationLink(cache, {
-    CreateUserLandDutyMutation: {
-      landDetailsQuery: ({ mutation, query }) => {
-        try {
-          const newULDEdge = createEdge(
-            mutation.result.data.createUserLandDuty.userLandDuty,
-            "UserLandDutyEdge"
-          );
-          return produce(query.result, draftResult => {
-            const landDutyId = mutation.variables.input.landDutyId;
-            draftResult.land.landDuties.edges
-              .find(e => e.node.id === landDutyId)
-              .node.userLandDuties.edges.push(newULDEdge);
-          });
-        } catch (e) {
-          console.error(e);
-          return query.result;
-        }
-      }
-    },
-    DeleteUserLandDutyMutation: {
+    // createCompletedDutyMutation: {
+    //   landDetailsQuery: ({ mutation, query }) => {
+    //     try {
+    //       const newULDEdge = createEdge(
+    //         mutation.result.data.createCompletedDuty.completedDuty,
+    //         "completedDutyEdge"
+    //       );
+    //       return produce(query.result, draftResult => {
+    //         const landDutyId = mutation.variables.input.landDutyId;
+    //         draftResult.land.landDuties.edges
+    //           .find(e => e.node.id === landDutyId)
+    //           .node.completedDuties.edges.push(newULDEdge);
+    //       });
+    //     } catch (e) {
+    //       console.error(e);
+    //       return query.result;
+    //     }
+    //   }
+    // },
+    DeleteCompletedDutyMutation: {
       landDetailsQuery: ({ mutation, query }) => {
         try {
           return produce(query.result, draftResult => {
             // TODO: This is super not performant and terrible
-            // If there is more than one in each userLandDuties this will fail
+            // If there is more than one in each completedDuties this will fail
             // it needs to be scoped to 24 hours on the query.reslt to be 24 hours or
             // whatever length until the next duty is due
             const landDutyId =
-              mutation.result.data.deleteUserLandDuty.userLandDuty.landDuty.id;
+              mutation.result.data.deleteCompletedDuty.completedDuty.landDuty
+                .id;
             draftResult.land.landDuties.edges.forEach(e =>
               draftResult.land.landDuties.edges
                 .find(e => e.node.id === landDutyId)
-                .node.userLandDuties.edges.splice(0)
+                .node.completedDuties.edges.splice(0)
             );
           });
         } catch (e) {

@@ -12,8 +12,8 @@ import AreaDutyDescriptionDialog from "./AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
 import { getISONow, getUserId } from "../helpers";
-import DeleteUserLandDutyMutation from "../graphql/mutations/deleteUserLandDutyMutation";
-import CreateUserLandDutyMutation from "../graphql/mutations/creatUserLandDutyMutation";
+import deleteCompletedDutyMutation from "../graphql/mutations/deleteCompletedDutyMutation";
+import createCompletedDutyMutation from "../graphql/mutations/createCompletedDutyMutation";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,17 +28,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const unCheckMutation = (deleteUserLandDuty, userLandDutyId) =>
-  deleteUserLandDuty({
+const unCheckMutation = (deletecompletedDuty, completedDutyId) =>
+  deletecompletedDuty({
     variables: {
       input: {
-        userLandDutyId: userLandDutyId
+        completedDutyId: completedDutyId
       }
     }
   });
 
-const checkMutation = (createUserLandDuty, landDutyId, userId) =>
-  createUserLandDuty({
+const checkMutation = (createcompletedDuty, landDutyId, userId) =>
+  createcompletedDuty({
     variables: {
       input: {
         landDutyId,
@@ -49,21 +49,21 @@ const checkMutation = (createUserLandDuty, landDutyId, userId) =>
   });
 
 const findLandDuty = landDuty =>
-  landDuty.userLandDuties.length &&
-  landDuty.userLandDuties.find(f => f.landDuty.id === landDuty.id);
+  landDuty.completedDuties.length &&
+  landDuty.completedDuties.find(f => f.landDuty.id === landDuty.id);
 
 export default props => {
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
   const classes = useStyles();
   const [showInfoDialog, toggleInfoDialogue] = React.useState(false);
-  const [createUserLandDuty] = useMutation(CreateUserLandDutyMutation);
-  const [deleteUserLandDuty] = useMutation(DeleteUserLandDutyMutation);
+  const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
+  const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
 
   return (
     <List className={classes.root}>
       {props.landDuties.map(landDuty => {
-        const userLandDuty = findLandDuty(landDuty);
+        const completedDuty = findLandDuty(landDuty);
 
         return (
           <ListItem
@@ -71,16 +71,16 @@ export default props => {
             dense
             button
             onClick={e =>
-              userLandDuty
-                ? unCheckMutation(deleteUserLandDuty, userLandDuty.id)
-                : checkMutation(createUserLandDuty, landDuty.id, userId)
+              completedDuty
+                ? unCheckMutation(deletecompletedDuty, completedDuty.id)
+                : checkMutation(createcompletedDuty, landDuty.id, userId)
             }
             style={{ width: "100vw" }}
           >
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={!!userLandDuty}
+                checked={!!completedDuty}
                 disableRipple
                 inputProps={{ "aria-labelledby": landDuty.id }}
               />
