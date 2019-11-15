@@ -5,13 +5,8 @@ export default gql`
   mutation DeleteCompletedDutyMutation($input: DeleteCompletedDutyInput!) {
     deleteCompletedDuty(input: $input) {
       success
-      completedDuty {
-        landDuty {
-          id
-        }
-      }
       land {
-        ...landFragment
+        ...LandFragment
       }
     }
   }

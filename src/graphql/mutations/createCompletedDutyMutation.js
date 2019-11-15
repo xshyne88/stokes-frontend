@@ -6,7 +6,7 @@ export default gql`
   mutation createCompletedDutyMutation($input: CreateCompletedDutyInput!) {
     createCompletedDuty(input: $input) {
       land {
-        ...landFragment
+        ...LandFragment
       }
       completedDuty {
         ...completedDutyFragment

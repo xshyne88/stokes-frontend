@@ -4,8 +4,8 @@ import produce from "immer";
 
 const createEdge = (node, typename) => ({ node, __typename: typename });
 
-export default cache =>
-  new WatchedMutationLink(cache, {
+// export default cache =>
+  // new WatchedMutationLink(cache, {
     // createCompletedDutyMutation: {
     //   landDetailsQuery: ({ mutation, query }) => {
     //     try {
@@ -25,29 +25,29 @@ export default cache =>
     //     }
     //   }
     // },
-    DeleteCompletedDutyMutation: {
-      landDetailsQuery: ({ mutation, query }) => {
-        try {
-          return produce(query.result, draftResult => {
-            // TODO: This is super not performant and terrible
-            // If there is more than one in each completedDuties this will fail
-            // it needs to be scoped to 24 hours on the query.reslt to be 24 hours or
-            // whatever length until the next duty is due
-            const landDutyId =
-              mutation.result.data.deleteCompletedDuty.completedDuty.landDuty
-                .id;
-            draftResult.land.landDuties.edges.forEach(e =>
-              draftResult.land.landDuties.edges
-                .find(e => e.node.id === landDutyId)
-                .node.completedDuties.edges.splice(0)
-            );
-          });
-        } catch (e) {
-          console.error(e);
-          return query.result;
-        }
-      }
-    }
+    // DeleteCompletedDutyMutation: {
+    //   landDetailsQuery: ({ mutation, query }) => {
+    //     try {
+    //       return produce(query.result, draftResult => {
+    //         // TODO: This is super not performant and terrible
+    //         // If there is more than one in each completedDuties this will fail
+    //         // it needs to be scoped to 24 hours on the query.reslt to be 24 hours or
+    //         // whatever length until the next duty is due
+    //         const landDutyId =
+    //           mutation.result.data.deleteCompletedDuty.completedDuty.landDuty
+        //         .id;
+        //     draftResult.land.landDuties.edges.forEach(e =>
+        //       draftResult.land.landDuties.edges
+        //         .find(e => e.node.id === landDutyId)
+        //         .node.completedDuties.edges.splice(0)
+        //     );
+        //   });
+        // } catch (e) {
+        //   console.error(e);
+        //   return query.result;
+    //     }
+    //   }
+    // }
     // AssignLandDutiesMutation: {
     //   landDetailsQuery: ({ mutation, query }) => {
     //     try {
