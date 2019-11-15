@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     height: 40,
     width: 40,
     top: 30
+  },
+  listItem: {
+    width: "100vw"
   }
 }));
 
@@ -63,11 +66,14 @@ export default props => {
   return (
     <List className={classes.root}>
       {props.landDuties.map(landDuty => {
+        const { id, duty } = landDuty;
+        const { name, description } = duty;
         const completedDuty = findLandDuty(landDuty);
 
         return (
           <ListItem
-            key={landDuty.id}
+            key={id}
+            className={classes.listItem}
             dense
             button
             onClick={e =>
@@ -75,7 +81,6 @@ export default props => {
                 ? unCheckMutation(deletecompletedDuty, completedDuty.id)
                 : checkMutation(createcompletedDuty, landDuty.id, userId)
             }
-            style={{ width: "100vw" }}
           >
             <ListItemIcon>
               <Checkbox
@@ -85,7 +90,7 @@ export default props => {
                 inputProps={{ "aria-labelledby": landDuty.id }}
               />
             </ListItemIcon>
-            <ListItemText id={landDuty.id} primary={`${landDuty.duty.name}`} />
+            <ListItemText id={id} primary={`${name}`} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
               <InfoIcon onClick={e => toggleInfoDialogue(true)} />
@@ -93,7 +98,7 @@ export default props => {
                 open={showInfoDialog}
                 onClose={() => toggleInfoDialogue(false)}
                 title={landDuty.duty.name}
-                content={landDuty.duty.description}
+                content={description}
               />
             </ListItemSecondaryAction>
           </ListItem>
