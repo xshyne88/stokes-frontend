@@ -103,7 +103,11 @@ export default props => {
           <Chip
             className={classes.activeChip}
             key={ld.id}
-            avatar={<FiberManualRecordIcon style={{ fill: "green" }} />}
+            avatar={
+              <FiberManualRecordIcon
+                style={{ fill: ld.status === "completed" ? "green" : "red" }}
+              />
+            }
             label={ellipsify(ld.duty.name)}
           />
         ))}
