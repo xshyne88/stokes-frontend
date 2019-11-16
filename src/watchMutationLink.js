@@ -4,8 +4,25 @@ import produce from "immer";
 
 const createEdge = (node, typename) => ({ node, __typename: typename });
 
-// export default cache =>
-  // new WatchedMutationLink(cache, {
+export default cache =>
+  new WatchedMutationLink(cache, {
+    createDutyMutation: {
+      dutiesQuery: ({ mutation, query }) => {
+        console.log(mutation, query);
+        try {
+          const newDutyEdge = createEdge(
+            mutation.result.data.createDuty.duty,
+            "DutyEdge"
+          );
+          return produce(query.result, draftResult => {
+            draftResult.duties.edges.push(newDutyEdge);
+          });
+        } catch (e) {
+          console.error(e);
+          return query.result;
+        }
+      }
+    }
     // createCompletedDutyMutation: {
     //   landDetailsQuery: ({ mutation, query }) => {
     //     try {
@@ -35,16 +52,16 @@ const createEdge = (node, typename) => ({ node, __typename: typename });
     //         // whatever length until the next duty is due
     //         const landDutyId =
     //           mutation.result.data.deleteCompletedDuty.completedDuty.landDuty
-        //         .id;
-        //     draftResult.land.landDuties.edges.forEach(e =>
-        //       draftResult.land.landDuties.edges
-        //         .find(e => e.node.id === landDutyId)
-        //         .node.completedDuties.edges.splice(0)
-        //     );
-        //   });
-        // } catch (e) {
-        //   console.error(e);
-        //   return query.result;
+    //         .id;
+    //     draftResult.land.landDuties.edges.forEach(e =>
+    //       draftResult.land.landDuties.edges
+    //         .find(e => e.node.id === landDutyId)
+    //         .node.completedDuties.edges.splice(0)
+    //     );
+    //   });
+    // } catch (e) {
+    //   console.error(e);
+    //   return query.result;
     //     }
     //   }
     // }

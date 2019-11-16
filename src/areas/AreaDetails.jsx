@@ -41,7 +41,7 @@ export default props => {
             <AddAreaLandDutiesDialog
               open={openDialog}
               onClose={() => toggleDialog(false)}
-              title={"Add Area Duty"}
+              title={land.name}
               land={land}
             />
           </>

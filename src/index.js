@@ -11,7 +11,7 @@ import { onError } from "apollo-link-error";
 import App from "./App";
 import { fetchNewAccessToken } from "./auth/fetchNewAccessToken";
 import { login } from "./auth/helpers";
-/* import getWatchedMutationLink from "./watchMutationLink"; */
+import getWatchedMutationLink from "./watchMutationLink";
 
 const realApi = "http://stokes-graveyard.cf/graphql";
 const devApi = "http://localhost:3000/graphql";
@@ -67,10 +67,10 @@ const errorLink = onError(
 
 const cache = new InMemoryCache();
 
-/* const watchedMutationLink = getWatchedMutationLink(cache); */
+const watchedMutationLink = getWatchedMutationLink(cache);
 
 const client = new ApolloClient({
-  link: ApolloLink.from([authLink, errorLink, httpLink]),
+  link: ApolloLink.from([authLink, watchedMutationLink, errorLink, httpLink]),
   cache
 });
 
