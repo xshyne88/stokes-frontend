@@ -10,6 +10,7 @@ import prune from "../prune";
 import dutiesQuery from "../graphql/queries/dutiesQuery";
 import AreasLoading from "./AreasLoading";
 import createDutyMutation from "../graphql/mutations/createDutyMutation";
+import createLandDutyMutation from "../graphql/mutations/createLandDutyMutation";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,9 +26,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const dutyKey = (duty, idx) => `${duty.name} + ${idx} + ${duty.id}`;
+const dutyIsOnLand = (duty, landDuties) =>
+  !!landDuties.find(ld => ld.duty.id === duty.id);
+
 export default ({ land }) => {
   const classes = useStyles();
   const [createDuty] = useMutation(createDutyMutation);
+  const [createLandDuty] = useMutation(createLandDutyMutation);
   const { loading, error, data } = useQuery(dutiesQuery);
   if (error || loading) return <AreasLoading />;
   const { landDuties } = land;
@@ -36,33 +42,43 @@ export default ({ land }) => {
   return (
     <Container className={classes.root}>
       <Grid className={classes.grid}>
-        {duties.map((duty, idx) => (
-          <Paper className={classes.paper} key={`${duty.name} + ${duty.idx}`}>
-            <Box display="flex" justifyContent="flex-end" textAlign="center">
-              <Box flexGrow={1}>
-                <Typography>{duty.name}</Typography>
+        {duties.map((duty, idx) => {
+          return (
+            <Paper className={classes.paper} key={dutyKey(duty, idx)}>
+              <Box display="flex" justifyContent="flex-end" textAlign="center">
+                <Box flexGrow={1}>
+                  <Typography>{duty.name}</Typography>
+                </Box>
+                <Box flexGrow={1} />
+                <Box flexGrow={1} style={{ marginLeft: "auto" }}></Box>
+                <Switch
+                  checked={!!dutyIsOnLand(duty, landDuties)}
+                  onChange={() =>
+                    createLandDuty({
+                      variables: { input: { landId: land.id, dutyId: duty.id } }
+                    })
+                  }
+                  value="checkedB"
+                  color="primary"
+                />
               </Box>
-              <Box flexGrow={1} />
-              <Box flexGrow={1} style={{ marginLeft: "auto" }}></Box>
-              <Switch
-                checked={true}
-                onChange={() => null}
-                value="checkedB"
-                color="primary"
-              />
-            </Box>
-          </Paper>
-        ))}
+            </Paper>
+          );
+        })}
       </Grid>
-      <Button
-        onClick={() =>
-          createDuty({
-            variables: { input: { name: "stuff", description: "mo stuff" } }
-          })
-        }
-      >
-        Add Duty
-      </Button>
+      <AddDutyButton createDuty={createDuty} />
     </Container>
   );
 };
+
+const AddDutyButton = ({ createDuty }) => (
+  <Button
+    onClick={() =>
+      createDuty({
+        variables: { input: { name: "stuff", description: "mo stuff" } }
+      })
+    }
+  >
+    Add Duty
+  </Button>
+);
