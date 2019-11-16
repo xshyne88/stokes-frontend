@@ -12,6 +12,7 @@ import App from "./App";
 import { fetchNewAccessToken } from "./auth/fetchNewAccessToken";
 import { login } from "./auth/helpers";
 import getWatchedMutationLink from "./watchMutationLink";
+import "./index.css";
 
 const realApi = "http://stokes-graveyard.cf/graphql";
 const devApi = "http://localhost:3000/graphql";

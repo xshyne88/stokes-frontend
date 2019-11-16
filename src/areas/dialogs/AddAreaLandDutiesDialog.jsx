@@ -27,7 +27,7 @@ export default ({ land, ...props }) => {
   const classes = useStyles();
   return (
     <Dialog
-      open={true || props.open}
+      open={props.open}
       onClose={e => props.onClose()}
       TransitionComponent={Transition}
       fullScreen

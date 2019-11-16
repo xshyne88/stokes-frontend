@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -9,9 +9,9 @@ import { useQuery, useMutation } from "react-apollo";
 import prune from "../prune";
 import dutiesQuery from "../graphql/queries/dutiesQuery";
 import AreasLoading from "./AreasLoading";
-import createDutyMutation from "../graphql/mutations/createDutyMutation";
 import deleteLandDutyMutation from "../graphql/mutations/deleteLandDutyMutation";
 import createLandDutyMutation from "../graphql/mutations/createLandDutyMutation";
+import AddDutyModal from "./AddDutyModal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,9 +33,9 @@ const dutyIsOnLand = (duty, landDuties) =>
 
 export default ({ land }) => {
   const classes = useStyles();
-  const [createDuty] = useMutation(createDutyMutation);
   const [createLandDuty] = useMutation(createLandDutyMutation);
   const [deleteLandDuty] = useMutation(deleteLandDutyMutation);
+  const [openModal, toggleAddDutyModal] = useState(false);
   const { loading, error, data } = useQuery(dutiesQuery);
   if (error || loading) return <AreasLoading />;
   const { landDuties } = land;
@@ -45,7 +45,6 @@ export default ({ land }) => {
     <Container className={classes.root}>
       <Grid className={classes.grid}>
         {duties.map((duty, idx) => {
-          console.log("rerender");
           const maybeLandDuty = dutyIsOnLand(duty, landDuties);
           return (
             <Paper className={classes.paper} key={dutyKey(duty, idx)}>
@@ -81,19 +80,8 @@ export default ({ land }) => {
           );
         })}
       </Grid>
-      <AddDutyButton createDuty={createDuty} />
+      <Button onClick={() => toggleAddDutyModal(true)}>Add Task</Button>
+      <AddDutyModal open={openModal} close={() => toggleAddDutyModal(false)} />
     </Container>
   );
 };
-
-const AddDutyButton = ({ createDuty }) => (
-  <Button
-    onClick={() =>
-      createDuty({
-        variables: { input: { name: "stuff", description: "mo stuff" } }
-      })
-    }
-  >
-    Add Duty
-  </Button>
-);

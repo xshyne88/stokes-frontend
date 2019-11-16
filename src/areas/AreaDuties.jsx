@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     width: "100vw"
+  },
+  checked: {
+    textDecoration: "line-through"
   }
 }));
 
@@ -90,7 +93,11 @@ export default props => {
                 inputProps={{ "aria-labelledby": landDuty.id }}
               />
             </ListItemIcon>
-            <ListItemText id={id} primary={`${name}`} />
+            <ListItemText id={id} style={{ lineDecoration: "line-through" }}>
+              <div className={completedDuty ? classes.checked : undefined}>
+                {name}
+              </div>
+            </ListItemText>
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
               <InfoIcon onClick={e => toggleInfoDialogue(true)} />
