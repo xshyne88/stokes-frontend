@@ -22,6 +22,20 @@ export default cache =>
           return query.result;
         }
       }
+    },
+    deleteLandDutyMutation: {
+      landDetailsQuery: ({ mutation, query }) => {
+        try {
+          return produce(query.result, draftResult => {
+            draftResult.land.landDuties.edges.filter(
+              e => e.id === mutation.variables.input.landDutyId
+            );
+          });
+        } catch (e) {
+          console.error(e);
+          return query.result;
+        }
+      }
     }
     // createCompletedDutyMutation: {
     //   landDetailsQuery: ({ mutation, query }) => {

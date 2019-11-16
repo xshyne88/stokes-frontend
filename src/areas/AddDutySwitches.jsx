@@ -10,6 +10,7 @@ import prune from "../prune";
 import dutiesQuery from "../graphql/queries/dutiesQuery";
 import AreasLoading from "./AreasLoading";
 import createDutyMutation from "../graphql/mutations/createDutyMutation";
+import deleteLandDutyMutation from "../graphql/mutations/deleteLandDutyMutation";
 import createLandDutyMutation from "../graphql/mutations/createLandDutyMutation";
 
 const useStyles = makeStyles(theme => ({
@@ -28,12 +29,13 @@ const useStyles = makeStyles(theme => ({
 
 const dutyKey = (duty, idx) => `${duty.name} + ${idx} + ${duty.id}`;
 const dutyIsOnLand = (duty, landDuties) =>
-  !!landDuties.find(ld => ld.duty.id === duty.id);
+  landDuties.find(ld => ld.duty.id === duty.id);
 
 export default ({ land }) => {
   const classes = useStyles();
   const [createDuty] = useMutation(createDutyMutation);
   const [createLandDuty] = useMutation(createLandDutyMutation);
+  const [deleteLandDuty] = useMutation(deleteLandDutyMutation);
   const { loading, error, data } = useQuery(dutiesQuery);
   if (error || loading) return <AreasLoading />;
   const { landDuties } = land;
@@ -43,6 +45,8 @@ export default ({ land }) => {
     <Container className={classes.root}>
       <Grid className={classes.grid}>
         {duties.map((duty, idx) => {
+          console.log("rerender");
+          const maybeLandDuty = dutyIsOnLand(duty, landDuties);
           return (
             <Paper className={classes.paper} key={dutyKey(duty, idx)}>
               <Box display="flex" justifyContent="flex-end" textAlign="center">
@@ -52,12 +56,23 @@ export default ({ land }) => {
                 <Box flexGrow={1} />
                 <Box flexGrow={1} style={{ marginLeft: "auto" }}></Box>
                 <Switch
-                  checked={!!dutyIsOnLand(duty, landDuties)}
-                  onChange={() =>
-                    createLandDuty({
-                      variables: { input: { landId: land.id, dutyId: duty.id } }
-                    })
-                  }
+                  checked={!!maybeLandDuty}
+                  onChange={() => {
+                    console.log(maybeLandDuty);
+                    maybeLandDuty
+                      ? deleteLandDuty({
+                          variables: {
+                            input: {
+                              landDutyId: maybeLandDuty.id
+                            }
+                          }
+                        })
+                      : createLandDuty({
+                          variables: {
+                            input: { landId: land.id, dutyId: duty.id }
+                          }
+                        });
+                  }}
                   value="checkedB"
                   color="primary"
                 />
