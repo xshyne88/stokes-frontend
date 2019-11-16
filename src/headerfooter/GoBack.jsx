@@ -12,7 +12,7 @@ export default ({ history }) => (
         paddingLeft: 0
       }}
     >
-      <KeyboardBackspaceIcon onClick={e => history.goBack()} />
+      <KeyboardBackspaceIcon onClick={_e => history.goBack()} />
       <Typography style={{ marginLeft: 20 }}>Go Back</Typography>
     </Container>
   </>

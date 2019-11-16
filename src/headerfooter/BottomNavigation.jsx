@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import AreasIcon from "@material-ui/icons/VerticalSplitSharp";
 import MapIcon from "@material-ui/icons/CropOriginalSharp";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
-import { UserContext } from "../UserProvider";
 import HistoryIcon from "@material-ui/icons/History";
 
 const useStyles = makeStyles({
@@ -18,58 +18,36 @@ const useStyles = makeStyles({
     justifyContent: "space-around",
     alignContent: "center",
     alignItems: "center"
-  },
-  childButtons: {}
+  }
 });
 
-export default props => {
+const capitalize = str => str.replace(/^\w/, c => c.toUpperCase());
+
+const routes = [
+  { route: "areas", icon: <AreasIcon /> },
+  { route: "map", icon: <MapIcon /> },
+  { route: "account", icon: <PersonIcon /> },
+  { route: "admin", icon: <HistoryIcon /> }
+];
+
+const BottomNav = props => {
   const classes = useStyles();
-  const [value, setValue] = React.useState("recents");
+  const currentRoute = props.location.pathname.slice(1);
 
-  const handleChange = (event, newValue) => {};
-
-  const { user } = useContext(UserContext);
-  if (user) {
-    return (
-      <BottomNavigation
-        value={value}
-        onChange={handleChange}
-        className={classes.root}
-      >
+  return (
+    <BottomNavigation value={currentRoute} className={classes.root}>
+      {routes.map(({ route, icon }) => (
         <BottomNavigationAction
-          label="Areas"
-          value="areas"
-          to="/areas"
-          icon={<AreasIcon />}
-          className={classes.childButtons}
+          key={route}
+          label={capitalize(route)}
+          value={route}
+          to={`/${route}`}
+          icon={icon}
           component={Link}
         />
-        <BottomNavigationAction
-          label="Map"
-          value="map"
-          to="/map"
-          icon={<MapIcon />}
-          className={classes.childButtons}
-          component={Link}
-        />
-        <BottomNavigationAction
-          label="Account"
-          value="account"
-          to="/account"
-          icon={<PersonIcon />}
-          className={classes.childButtons}
-          component={Link}
-        />
-        <BottomNavigationAction
-          label="Admin"
-          value="admin"
-          to="/admin"
-          icon={<HistoryIcon />}
-          className={classes.childButtons}
-          component={Link}
-        />
-        )
-      </BottomNavigation>
-    );
-  } else return null;
+      ))}
+    </BottomNavigation>
+  );
 };
+
+export default withRouter(BottomNav);
