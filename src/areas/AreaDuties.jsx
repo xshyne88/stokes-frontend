@@ -48,8 +48,7 @@ const checkMutation = (createcompletedDuty, landDutyId, userId) =>
     variables: {
       input: {
         landDutyId,
-        userId,
-        completedAt: getISONow()
+        userId
       }
     }
   });
