@@ -3,7 +3,8 @@ import gql from "graphql-tag";
 export const completedDutyFragment = gql`
   fragment completedDutyFragment on CompletedDuty {
     id
-    completedAt
+    expiresAt
+    expired
     createdAt
     landDuty {
       id
