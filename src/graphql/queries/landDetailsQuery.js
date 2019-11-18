@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { completedDutyFragment } from "../fragments/completedDutyFragment";
+import landDutyFragment from "../fragments/landDutyFragment";
 
 export default gql`
   query landDetailsQuery($landId: ID!) {
@@ -11,24 +11,11 @@ export default gql`
       landDuties {
         edges {
           node {
-            completedDuties {
-              edges {
-                node {
-                  ...completedDutyFragment
-                }
-              }
-            }
-            id
-            estimatedDays
-            duty {
-              id
-              name
-              description
-            }
+            ...LandDutyFragment
           }
         }
       }
     }
   }
-  ${completedDutyFragment}
+  ${landDutyFragment}
 `;

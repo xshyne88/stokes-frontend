@@ -131,7 +131,15 @@ export default props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography>Notes go here</Typography>
+          {props.land.landDuties.map(ld => (
+            <Typography>
+              {ld.activeCompletedDuty &&
+                ld.duty.name +
+                  " " +
+                  "was completed by: " +
+                  ld.activeCompletedDuty.lastCompletedBy}
+            </Typography>
+          ))}
         </CardContent>
       </Collapse>
     </Card>

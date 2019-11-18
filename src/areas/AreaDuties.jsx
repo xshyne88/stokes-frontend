@@ -11,7 +11,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
-import { getISONow, getUserId } from "../helpers";
+import { getUserId } from "../helpers";
 import deleteCompletedDutyMutation from "../graphql/mutations/deleteCompletedDutyMutation";
 import createCompletedDutyMutation from "../graphql/mutations/createCompletedDutyMutation";
 
@@ -53,10 +53,6 @@ const checkMutation = (createcompletedDuty, landDutyId, userId) =>
     }
   });
 
-const findLandDuty = landDuty =>
-  landDuty.completedDuties.length &&
-  landDuty.completedDuties.find(f => f.landDuty.id === landDuty.id);
-
 export default props => {
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
@@ -68,10 +64,10 @@ export default props => {
   return (
     <List className={classes.root}>
       {props.landDuties.map(landDuty => {
-        const { id, duty } = landDuty;
+        const { id, duty, activeCompletedDuty, status } = landDuty;
         const { name, description } = duty;
-        const completedDuty = findLandDuty(landDuty);
-
+        console.log(activeCompletedDuty);
+        console.log(landDuty, "landduty");
         return (
           <ListItem
             key={id}
@@ -79,24 +75,31 @@ export default props => {
             dense
             button
             onClick={e =>
-              completedDuty
-                ? unCheckMutation(deletecompletedDuty, completedDuty.id)
+              activeCompletedDuty
+                ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
                 : checkMutation(createcompletedDuty, landDuty.id, userId)
             }
           >
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={!!completedDuty}
+                checked={!!activeCompletedDuty}
                 disableRipple
                 inputProps={{ "aria-labelledby": landDuty.id }}
               />
             </ListItemIcon>
             <ListItemText id={id} style={{ lineDecoration: "line-through" }}>
-              <div className={completedDuty ? classes.checked : undefined}>
+              <div
+                className={activeCompletedDuty ? classes.checked : undefined}
+              >
                 {name}
               </div>
             </ListItemText>
+            {activeCompletedDuty && (
+              <ListItemText id={id} style={{ fontStyle: "italic" }}>
+                <div>Completed by: {activeCompletedDuty.lastCompletedBy}</div>
+              </ListItemText>
+            )}
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
               <InfoIcon onClick={e => toggleInfoDialogue(true)} />

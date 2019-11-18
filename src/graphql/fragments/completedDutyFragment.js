@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const completedDutyFragment = gql`
+export default gql`
   fragment completedDutyFragment on CompletedDuty {
     id
     expiresAt
