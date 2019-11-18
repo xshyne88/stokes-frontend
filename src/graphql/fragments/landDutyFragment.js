@@ -10,6 +10,7 @@ export default gql`
     activeCompletedDuty {
       id
       lastCompletedBy
+      expiresAt
     }
     duty {
       ...dutyFragment
