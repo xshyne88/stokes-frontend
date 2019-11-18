@@ -6,7 +6,7 @@ export default gql`
     duties {
       edges {
         node {
-          ...DutyFragment
+          ...dutyFragment
         }
       }
     }
