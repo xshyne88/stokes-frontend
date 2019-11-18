@@ -9,5 +9,6 @@ export const completedDutyFragment = gql`
     landDuty {
       id
     }
+    lastCompletedBy
   }
 `;
