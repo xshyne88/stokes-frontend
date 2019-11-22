@@ -31,7 +31,6 @@ export default () => {
   if (loading) return <AreasLoading />;
 
   const lands = prune(data).lands;
-  console.log(lands);
 
   return (
     <List className={classes.root}>

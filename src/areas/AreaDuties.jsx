@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     top: 30
   },
   listItem: {
-    width: "100vw"
+    width: "100%"
   },
   checked: {
     textDecoration: "line-through"
@@ -66,8 +66,6 @@ export default props => {
       {props.landDuties.map(landDuty => {
         const { id, duty, activeCompletedDuty, status } = landDuty;
         const { name, description } = duty;
-        console.log(activeCompletedDuty);
-        console.log(landDuty, "landduty");
         return (
           <ListItem
             key={id}
