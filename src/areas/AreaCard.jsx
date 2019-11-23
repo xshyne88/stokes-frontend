@@ -132,7 +132,7 @@ export default props => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           {props.land.landDuties.map(ld => (
-            <Typography>
+            <Typography key={ld.id}>
               {ld.activeCompletedDuty &&
                 ld.duty.name +
                   " " +

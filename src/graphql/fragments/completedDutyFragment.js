@@ -8,6 +8,13 @@ export default gql`
     createdAt
     landDuty {
       id
+      land {
+        name
+      }
+      duty {
+        id
+        name
+      }
     }
     lastCompletedBy
   }
