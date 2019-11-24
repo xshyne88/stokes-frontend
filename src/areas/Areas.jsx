@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { useQuery } from "@apollo/react-hooks";
-import AreasLoadError from "./AreasLoadError.jsx";
-import AreasLoading from "./AreasLoading.jsx";
+import LoadError from "./LoadError.jsx";
+import Loading from "./Loading.jsx";
 import prune from "../prune";
 import LANDS_QUERY from "../graphql/queries/landsQuery";
 
@@ -27,8 +27,8 @@ export default () => {
   const classes = useStyles();
   const { loading, error, data } = useQuery(LANDS_QUERY);
 
-  if (error) return <AreasLoadError />;
-  if (loading) return <AreasLoading />;
+  if (error) return <LoadError />;
+  if (loading) return <Loading />;
 
   const lands = prune(data).lands;
 

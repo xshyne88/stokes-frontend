@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AreasLoading from "./AreasLoading";
-import AreasLoadError from "./AreasLoadError";
+import Loading from "./Loading";
+import LoadError from "./LoadError";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import Area from "./Area";
@@ -21,8 +21,8 @@ export default props => {
     variables: { landId }
   });
 
-  if (error) return <AreasLoading />;
-  if (loading) return <AreasLoadError />;
+  if (error) return <Loading />;
+  if (loading) return <LoadError />;
 
   if (data && data.land) {
     const land = prune(data.land);

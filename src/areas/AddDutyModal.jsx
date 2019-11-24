@@ -9,7 +9,7 @@ import Fade from "../animations/Fade";
 import Divider from "@material-ui/core/Divider";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import AreasLoading from "./AreasLoading";
+import Loading from "./Loading";
 import { TextField, Button } from "@material-ui/core";
 
 const validationSchema = Yup.object().shape({
@@ -35,7 +35,7 @@ const handleFormikSubmit = async (
     }
   });
   console.log(result);
-  return setSubmitting ? <AreasLoading /> : { children };
+  return setSubmitting ? <Loading /> : { children };
 };
 
 const useStyles = makeStyles(theme => ({

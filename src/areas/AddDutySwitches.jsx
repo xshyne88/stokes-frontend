@@ -8,7 +8,7 @@ import Switch from "@material-ui/core/Switch";
 import { useQuery, useMutation } from "react-apollo";
 import prune from "../prune";
 import dutiesQuery from "../graphql/queries/dutiesQuery";
-import AreasLoading from "./AreasLoading";
+import Loading from "./Loading";
 import deleteLandDutyMutation from "../graphql/mutations/deleteLandDutyMutation";
 import createLandDutyMutation from "../graphql/mutations/createLandDutyMutation";
 import AddDutyModal from "./AddDutyModal";
@@ -37,7 +37,7 @@ export default ({ land }) => {
   const [deleteLandDuty] = useMutation(deleteLandDutyMutation);
   const [openModal, toggleAddDutyModal] = useState(false);
   const { loading, error, data } = useQuery(dutiesQuery);
-  if (error || loading) return <AreasLoading />;
+  if (error || loading) return <Loading />;
   const { landDuties } = land;
   const duties = (data && prune(data.duties)) || [];
 
