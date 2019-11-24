@@ -17,7 +17,7 @@ import "./index.css";
 const realApi = "http://stokes-graveyard.cf/graphql";
 const devApi = "http://localhost:3000/graphql";
 
-const httpLink = new HttpLink({ uri: realApi });
+const httpLink = new HttpLink({ uri: devApi });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("access-token") || "";
