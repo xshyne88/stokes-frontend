@@ -9,7 +9,7 @@ import Fade from "../animations/Fade";
 import Divider from "@material-ui/core/Divider";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 import { TextField, Button } from "@material-ui/core";
 
 const validationSchema = Yup.object().shape({

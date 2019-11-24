@@ -2,11 +2,11 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import MUIDataTable from "mui-datatables";
 import { useQuery } from "@apollo/react-hooks";
-import Loading from "../areas/Loading";
-import LoadError from "../areas/LoadError";
 import COMPLETED_DUTIES_QUERY from "../graphql/queries/completedDutiesQuery";
 import prune from "../prune";
 import DateDisplay from "../components/DateDisplay";
+import Loading from "../components/Loading";
+import LoadError from "../components/LoadError";
 
 const Admin = () => {
   const { error, data } = useQuery(COMPLETED_DUTIES_QUERY);

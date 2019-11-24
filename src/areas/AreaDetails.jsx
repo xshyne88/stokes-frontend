@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Loading from "./Loading";
-import LoadError from "./LoadError";
+import Loading from "../components/Loading";
+import LoadError from "../components/LoadError";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import Area from "./Area";

@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { useQuery } from "@apollo/react-hooks";
-import LoadError from "./LoadError.jsx";
-import Loading from "./Loading.jsx";
+import LoadError from "../components/LoadError.jsx";
+import Loading from "../components/Loading.jsx";
 import prune from "../prune";
 import LANDS_QUERY from "../graphql/queries/landsQuery";
 

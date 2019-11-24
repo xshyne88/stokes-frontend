@@ -8,7 +8,7 @@ import Switch from "@material-ui/core/Switch";
 import { useQuery, useMutation } from "react-apollo";
 import prune from "../prune";
 import dutiesQuery from "../graphql/queries/dutiesQuery";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 import deleteLandDutyMutation from "../graphql/mutations/deleteLandDutyMutation";
 import createLandDutyMutation from "../graphql/mutations/createLandDutyMutation";
 import AddDutyModal from "./AddDutyModal";
