@@ -23,26 +23,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default ({ land, ...props }) => {
+export default ({ land, title, open, onClose, ...props }) => {
   const classes = useStyles();
   return (
     <Dialog
-      open={props.open}
-      onClose={e => props.onClose()}
-      TransitionComponent={Transition}
+      open={open}
+      onClose={e => onClose()}
       fullScreen
+      TransitionComponent={Transition}
     >
-      <DialogTitle>
-        <Typography className={classes.title}>{props.title}</Typography>
-      </DialogTitle>
+      <Title title={title} titleClass={classes.title} />
       <Divider />
       <DialogContent className={classes.content}>
         <AreaDutySwitches land={land} />
       </DialogContent>
-      <Button onClick={e => props.onClose()}>Close</Button>
+      <Button onClick={e => onClose()}>Close</Button>
     </Dialog>
   );
 };
+
+const Title = ({ titleClass, title }) => (
+  <DialogTitle>
+    <Typography className={titleClass}>{title}</Typography>
+  </DialogTitle>
+);
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

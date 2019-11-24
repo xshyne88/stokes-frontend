@@ -6,7 +6,7 @@ import AreasLoading from "../areas/AreasLoading";
 import AreasLoadError from "../areas/AreasLoadError";
 import COMPLETED_DUTIES_QUERY from "../graphql/queries/completedDutiesQuery";
 import prune from "../prune";
-import dayjs from "dayjs";
+import DateDisplay from "../components/DateDisplay";
 
 const Admin = () => {
   const { error, data } = useQuery(COMPLETED_DUTIES_QUERY);
@@ -65,7 +65,3 @@ const Admin = () => {
 };
 
 export default Admin;
-
-const DateDisplay = ({ value, showTime = false }) => (
-  <div>{dayjs(value).format(`${showTime ? "HH:mm" : ""} MMM D YYYY`)}</div>
-);

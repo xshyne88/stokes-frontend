@@ -12,6 +12,7 @@ import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
 import { getUserId } from "../helpers";
+import { defaultFormat } from "../components/DateDisplay";
 import deleteCompletedDutyMutation from "../graphql/mutations/deleteCompletedDutyMutation";
 import createCompletedDutyMutation from "../graphql/mutations/createCompletedDutyMutation";
 
@@ -67,7 +68,7 @@ export default props => {
       {landDuties.map(landDuty => {
         const { id, duty, activeCompletedDuty } = landDuty;
         const { name, description } = duty;
-        const incomplete = !!activeCompletedDuty;
+        const completed = !!activeCompletedDuty;
         return (
           <ListItem
             key={id}
@@ -75,21 +76,21 @@ export default props => {
             dense
             button
             onClick={e =>
-              incomplete
+              completed
                 ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
                 : checkMutation(createcompletedDuty, landDuty.id, userId)
             }
           >
             <ListItemIcon>
-              <Checkbox edge="start" checked={incomplete} disableRipple />
+              <Checkbox edge="start" checked={completed} disableRipple />
             </ListItemIcon>
-            <LandDutyName
+            <TaskName
+              landDutyId={id}
               shouldLineThrough={!!activeCompletedDuty}
               className={classes.checked}
               name={name}
             />
             <CompletedBy activeCompletedDuty={activeCompletedDuty} id={id} />
-            <ListItemText id={id}></ListItemText>
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
               <InfoIcon onClick={e => toggleInfoDialogue(true)} />
@@ -114,12 +115,14 @@ const completedByStyles = {
 const CompletedBy = ({ activeCompletedDuty, id }) =>
   activeCompletedDuty && (
     <ListItemText id={id} style={completedByStyles}>
-      <div>Completed by: {activeCompletedDuty.lastCompletedBy}</div>
+      <div>{`Expires at ${defaultFormat(activeCompletedDuty.expiresAt)}`}</div>
     </ListItemText>
   );
 
-const LandDutyName = ({ shouldLineThrough, className, name }) => {
+const TaskName = ({ shouldLineThrough, className, name, landDutyId }) => {
   return (
-    <div className={shouldLineThrough ? className : undefined}>{name}</div>
+    <ListItemText id={landDutyId}>
+      <div className={shouldLineThrough ? className : undefined}>{name}</div>
+    </ListItemText>
   );
 };
