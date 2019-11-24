@@ -1,5 +1,5 @@
 import React from "react";
-import { Loading } from "../components/Spinners";
+import { Loading } from "./Spinners";
 
 const centeringIsImpossible = {
   display: "table",
