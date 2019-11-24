@@ -2,6 +2,8 @@ import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import LandMarker from "./map/LandMarker";
+import LoadError from "./components/LoadError";
+import Loading from "./components/Loading";
 
 const LANDS_QUERY = gql`
   query landsQuery {
@@ -21,19 +23,20 @@ const LANDS_QUERY = gql`
 export const AllLands = ({ marker, markerProps }) => {
   const { loading, error, data } = useQuery(LANDS_QUERY);
 
-  if (error) return <div>error</div>;
-  if (loading) return <div>***LOADING****</div>;
+  if (loading) return <Loading />;
+  if (error) return <LoadError />;
+  if (!data) return <LoadError />;
 
-  if (data && data.lands.edges) {
-    return (
-      <LandDisplay
-        lands={data.lands.edges}
-        marker={marker}
-        markerProps={markerProps}
-      />
-    );
-  }
-  return <div>No lands have been created</div>;
+  const landsCount = data.lands.edges.length;
+  if (landsCount === 0) return <div>No lands have been created</div>;
+
+  return (
+    <LandDisplay
+      lands={data.lands.edges}
+      marker={marker}
+      markerProps={markerProps}
+    />
+  );
 };
 
 const LandCards = () => null;
@@ -41,17 +44,19 @@ const LandCards = () => null;
 const LandDisplay = ({ lands, marker, markerProps }) => {
   const Component = marker ? LandMarker : LandCards;
   return lands.reduce((acc, land) => {
-    if (!land.node.latitude || !land.node.longitude) return acc;
+    const { node } = land;
+    const { latitude, longitude, id, name } = node;
+    if (!latitude || !longitude) return acc;
     return [
       ...acc,
       <Component
-        key={land.node.id}
-        {...markerProps}
-        longitude={land.node.longitude}
-        latitude={land.node.latitude}
-        name={land.node.name}
-        landId={land.node.id}
+        key={id}
+        landId={id}
+        name={name}
+        longitude={longitude}
+        latitude={latitude}
         land={land.node}
+        {...markerProps}
       />
     ];
   }, []);
