@@ -29,6 +29,7 @@ export default () => {
 
   if (error) return <LoadError />;
   if (loading) return <Loading />;
+  if (!data) return <LoadError />;
 
   const lands = prune(data).lands;
 

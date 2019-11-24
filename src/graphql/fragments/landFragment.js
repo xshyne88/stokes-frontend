@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import completedDutyFragment from "./completedDutyFragment";
 import landDutyFragment from "./landDutyFragment";
 
 export default gql`
