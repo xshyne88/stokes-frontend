@@ -17,7 +17,7 @@ import createCompletedDutyMutation from "../graphql/mutations/createCompletedDut
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "100vw",
+    width: "100%",
     backgroundColor: theme.palette.background.paper
   },
   addCircle: {
@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
   },
   checked: {
     textDecoration: "line-through"
-  }
+  },
+  italic: {}
 }));
 
 const unCheckMutation = (deletecompletedDuty, completedDutyId) =>
@@ -54,18 +55,19 @@ const checkMutation = (createcompletedDuty, landDutyId, userId) =>
   });
 
 export default props => {
+  const { landDuties } = props;
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
   const classes = useStyles();
   const [showInfoDialog, toggleInfoDialogue] = React.useState(false);
   const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
   const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
-
   return (
     <List className={classes.root}>
-      {props.landDuties.map(landDuty => {
-        const { id, duty, activeCompletedDuty, status } = landDuty;
+      {landDuties.map(landDuty => {
+        const { id, duty, activeCompletedDuty } = landDuty;
         const { name, description } = duty;
+        const incomplete = !!activeCompletedDuty;
         return (
           <ListItem
             key={id}
@@ -73,31 +75,21 @@ export default props => {
             dense
             button
             onClick={e =>
-              activeCompletedDuty
+              incomplete
                 ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
                 : checkMutation(createcompletedDuty, landDuty.id, userId)
             }
           >
             <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={!!activeCompletedDuty}
-                disableRipple
-                inputProps={{ "aria-labelledby": landDuty.id }}
-              />
+              <Checkbox edge="start" checked={incomplete} disableRipple />
             </ListItemIcon>
-            <ListItemText id={id} style={{ lineDecoration: "line-through" }}>
-              <div
-                className={activeCompletedDuty ? classes.checked : undefined}
-              >
-                {name}
-              </div>
-            </ListItemText>
-            {activeCompletedDuty && (
-              <ListItemText id={id} style={{ fontStyle: "italic" }}>
-                <div>Completed by: {activeCompletedDuty.lastCompletedBy}</div>
-              </ListItemText>
-            )}
+            <LandDutyName
+              shouldLineThrough={!!activeCompletedDuty}
+              className={classes.checked}
+              name={name}
+            />
+            <CompletedBy activeCompletedDuty={activeCompletedDuty} id={id} />
+            <ListItemText id={id}></ListItemText>
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
               <InfoIcon onClick={e => toggleInfoDialogue(true)} />
@@ -112,5 +104,22 @@ export default props => {
         );
       })}
     </List>
+  );
+};
+
+const completedByStyles = {
+  fontStyle: "italic"
+};
+
+const CompletedBy = ({ activeCompletedDuty, id }) =>
+  activeCompletedDuty && (
+    <ListItemText id={id} style={completedByStyles}>
+      <div>Completed by: {activeCompletedDuty.lastCompletedBy}</div>
+    </ListItemText>
+  );
+
+const LandDutyName = ({ shouldLineThrough, className, name }) => {
+  return (
+    <div className={shouldLineThrough ? className : undefined}>{name}</div>
   );
 };

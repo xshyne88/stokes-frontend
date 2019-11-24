@@ -27,7 +27,7 @@ const getNameFromRoute = props => {
   if (props.location.pathname.match(/\/areas\/.+/)) {
     return <GoBack history={props.history} />;
   }
-  return `Todo List for ${dayjs().format("M-D-YY")}`;
+  return `Todays date: ${dayjs().format("M-D-YY HH:mm:ss")}`;
 };
 
 export default withRouter(Header);
