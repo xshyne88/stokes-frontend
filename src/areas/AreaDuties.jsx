@@ -60,7 +60,7 @@ export default props => {
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
   const classes = useStyles();
-  const [showInfoDialog, toggleInfoDialogue] = React.useState(false);
+  const [activeId, toggleInfoDialogue] = React.useState(false);
   const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
   const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
   return (
@@ -93,9 +93,9 @@ export default props => {
             <CompletedBy activeCompletedDuty={activeCompletedDuty} id={id} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments" />
-              <InfoIcon onClick={e => toggleInfoDialogue(true)} />
+              <InfoIcon onClick={e => toggleInfoDialogue(landDuty.id)} />
               <AreaDutyDescriptionDialog
-                open={showInfoDialog}
+                open={activeId === landDuty.id}
                 onClose={() => toggleInfoDialogue(false)}
                 title={landDuty.duty.name}
                 content={description}

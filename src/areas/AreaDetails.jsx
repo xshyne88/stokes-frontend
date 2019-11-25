@@ -12,8 +12,6 @@ import AddCircle from "@material-ui/icons/AddCircle";
 import AddAreaLandDutiesDialog from "./dialogs/AddAreaLandDutiesDialog";
 
 export default props => {
-  // const { user } = useContext(UserContext);
-  // console.log(user);
   const landId = props.match.params.id;
   const classes = useStyles();
   const [openDialog, toggleDialog] = useState(false);
@@ -21,8 +19,8 @@ export default props => {
     variables: { landId }
   });
 
-  if (error) return <Loading />;
-  if (loading) return <LoadError />;
+  if (loading) return <Loading />;
+  if (error) return <LoadError />;
 
   if (data && data.land) {
     const land = prune(data.land);

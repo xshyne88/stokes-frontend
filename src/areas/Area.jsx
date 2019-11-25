@@ -37,9 +37,9 @@ export default ({ area }) => {
         <Typography variant="h3" component="h3">
           {area.name}
         </Typography>
-        <Typography className={classes.pos}>
-          Last Mowed November 10, 2019 by Jacob Haug
-        </Typography>
+        {/* <Typography className={classes.pos}>
+            Last Mowed November 10, 2019 by Jacob Haug
+            </Typography> */}
       </CardContent>
     </Card>
   );
