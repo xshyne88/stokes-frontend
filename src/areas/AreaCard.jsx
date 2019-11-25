@@ -16,6 +16,8 @@ import { Chip } from "@material-ui/core";
 import AreaCardExpandedContent from "./AreaCardExpandedContent";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { lighten, withStyles } from "@material-ui/core/styles";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles(theme => ({
   card: { width: "100%" },
@@ -34,7 +36,14 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    height: 35
+    backgroundColor: "white",
+    height: 40
+  },
+  check: {
+    color: "green"
+  },
+  notDone: {
+    color: "red"
   },
   scootRight: {
     marginRight: 10
@@ -64,12 +73,12 @@ const BorderLinearProgress = withStyles({
   }
 })(LinearProgress);
 
-const AreaCardTitle = ({ landId, lastCompletedDuty, landName }) => (
+const AreaCardTitle = ({ land, lastCompletedDuty }) => (
   <div>
-    <Link to={`areas/${landId}`}>{landName}</Link>
+    <Link to={`areas/${land.id}`}>{land.name}</Link>
     {lastCompletedDuty && (
       <div style={{ display: "flex" }}>
-        <i>Last Completed Duty: </i>
+        <i>Most Recent Activity: </i>
         <div style={{ marginLeft: 10 }}>{lastCompletedDuty}</div>
       </div>
     )}
@@ -93,8 +102,9 @@ export default props => {
 
   const landId = props.land.id;
   const landName = props.land.name;
-  const { lastCompletedDuty } = props.land;
-  const { landDuties } = props.land;
+  const { land } = props;
+  const { lastCompletedDuty } = land;
+  const { landDuties } = land;
   const percentageComplete = getPercentageOfDutiesCompleted(landDuties);
 
   return (
@@ -103,20 +113,18 @@ export default props => {
         onClick={e => <Redirect to={`areas/${landId}`} />}
         avatar={
           <div>
-            <Avatar aria-label="name" className={classes.avatar}></Avatar>
+            <Avatar aria-label="name" className={classes.avatar}>
+              {percentageComplete === 100 ? (
+                <CheckCircleOutlineIcon className={classes.check} />
+              ) : (
+                <ClearIcon className={classes.notDone} />
+              )}
+            </Avatar>
           </div>
         }
-        action={
-          <IconButton aria-label="settings">
-            {/* <OpenInBrowserIcon /> */}
-          </IconButton>
-        }
+        action={<IconButton aria-label="settings" />}
         title={
-          <AreaCardTitle
-            landId={landId}
-            landName={landName}
-            lastCompletedDuty={lastCompletedDuty}
-          />
+          <AreaCardTitle land={land} lastCompletedDuty={lastCompletedDuty} />
         }
       />
 
