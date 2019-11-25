@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: orange[200],
     height: 35
   },
   scootRight: {
@@ -111,7 +110,7 @@ export default props => {
         }
         action={
           <IconButton aria-label="settings">
-            <OpenInBrowserIcon />
+            {/* <OpenInBrowserIcon /> */}
           </IconButton>
         }
         title={
