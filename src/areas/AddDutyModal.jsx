@@ -23,7 +23,6 @@ const handleFormikSubmit = async (
   { setSubmitting, setErrors, setStatus, children }
 ) => {
   const { name, description, estimatedDays, mutation } = values;
-  console.log(values);
 
   const result = await mutation({
     variables: {
@@ -34,7 +33,6 @@ const handleFormikSubmit = async (
       }
     }
   });
-  console.log(result);
   return setSubmitting ? <Loading /> : { children };
 };
 

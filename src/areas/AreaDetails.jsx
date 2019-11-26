@@ -10,6 +10,7 @@ import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
 import AddCircle from "@material-ui/icons/AddCircle";
 // import { UserContext } from "../UserProvider";
 import AddAreaLandDutiesDialog from "./dialogs/AddAreaLandDutiesDialog";
+import AreaTabs from './AreaTabs';
 
 export default props => {
   const landId = props.match.params.id;
@@ -27,7 +28,7 @@ export default props => {
     return (
       <div>
         <Area area={land} />
-        <AreaDuties landDuties={land.landDuties} />
+        <AreaTabs land={land} />
         {/* {user.isAdmin && ( */}
         {true && (
           <>
