@@ -101,7 +101,6 @@ export default props => {
   const handleExpandClick = () => setExpanded(!expanded);
 
   const landId = props.land.id;
-  const landName = props.land.name;
   const { land } = props;
   const { lastCompletedDuty } = land;
   const { landDuties } = land;
@@ -141,7 +140,7 @@ export default props => {
             key={ld.id}
             avatar={
               <FiberManualRecordIcon
-                style={{ fill: !!ld.activeCompletedDuty ? "green" : "red" }}
+                style={{ fill: ld.activeCompletedDuty ? "green" : "red" }}
               />
             }
             label={ellipsify(ld.duty.name)}

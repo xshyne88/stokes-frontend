@@ -4,7 +4,6 @@ import LoadError from "../components/LoadError";
 import { useQuery } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import Area from "./Area";
-import AreaDuties from "./AreaDuties";
 import prune from "../prune";
 import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
 import AddCircle from "@material-ui/icons/AddCircle";
@@ -25,7 +24,6 @@ export default props => {
 
   if (data && data.land) {
     const { land } = prune(data);
-    const { landDuties } = land;
     return (
       <div>
         <Area area={land} />

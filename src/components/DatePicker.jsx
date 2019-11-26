@@ -27,9 +27,6 @@ export default function MaterialUIPickers({
           format="MM-dd-yyyy"
           value={selectedDate}
           onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date"
-          }}
         />
       </Grid>
     </MuiPickersUtilsProvider>

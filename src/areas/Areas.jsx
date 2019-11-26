@@ -12,7 +12,7 @@ import LANDS_QUERY from "../graphql/queries/landsQuery";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap"
@@ -35,11 +35,11 @@ export default () => {
 
   return (
     <List className={classes.root}>
-      <ListItem className={classes.listItem}>
-        {lands.map(land => (
-          <AreaCard key={land.id} land={land} />
-        ))}
-      </ListItem>
+      {lands.map(land => (
+        <ListItem className={classes.listItem} key={land.id}>
+          <AreaCard land={land} />
+        </ListItem>
+      ))}
     </List>
   );
 };

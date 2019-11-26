@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import dutyFragment from "./dutyFragment";
+import completedDutyFragment from "./completedDutyFragment";
 
 export default gql`
   fragment LandDutyFragment on LandDuty {
@@ -8,13 +9,12 @@ export default gql`
     estimatedDays
     status
     activeCompletedDuty {
-      id
-      lastCompletedBy
-      expiresAt
+      ...completedDutyFragment
     }
     duty {
       ...dutyFragment
     }
   }
   ${dutyFragment}
+  ${completedDutyFragment}
 `;

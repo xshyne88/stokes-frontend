@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,7 +10,6 @@ import AreaDuties from "./AreaDuties";
 import Visibility from "@material-ui/icons/Visibility";
 import View from "./View";
 import EditIcon from "@material-ui/icons/Edit";
-import ExploreIcon from "@material-ui/icons/Explore";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,7 +38,8 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: "100%"
+    width: "100%",
+    minHeight: 650
   }
 }));
 
@@ -70,7 +69,6 @@ export default ({ land }) => {
         >
           <Tab label="View" {...a11yProps(0)} icon={<Visibility />} />
           <Tab label="Complete" {...a11yProps(1)} icon={<EditIcon />} />
-          <Tab label="Map Position" {...a11yProps(2)} icon={<ExploreIcon />} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -83,9 +81,6 @@ export default ({ land }) => {
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <AreaDuties landDuties={land.landDuties} />
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
         </TabPanel>
       </SwipeableViews>
     </div>

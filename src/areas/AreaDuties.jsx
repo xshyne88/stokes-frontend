@@ -3,13 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import EditIcon from "@material-ui/icons/Edit";
-import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
 import { getUserId } from "../helpers";
@@ -61,15 +56,13 @@ export default props => {
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
   const classes = useStyles();
-  const [activeId, toggleInfoDialogue] = React.useState(false);
   const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
   const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
   return (
     <List className={classes.root}>
       {landDuties.map(landDuty => {
         const { id: landDutyId, duty, activeCompletedDuty } = landDuty;
-        const { dutyName } = duty;
-        const { name, description } = duty;
+        const { name } = duty;
         const completed = !!activeCompletedDuty;
         return (
           <ListItem
@@ -96,26 +89,11 @@ export default props => {
               activeCompletedDuty={activeCompletedDuty}
               id={landDutyId}
             />
-            <ListItemSecondaryAction>
-              <IconButton aria-label="comments">
-                <InfoIcon onClick={e => toggleInfoDialogue(landDutyId)} />
-              </IconButton>
-              <AreaDutyDescriptionDialog
-                open={activeId === landDutyId}
-                onClose={() => toggleInfoDialogue(false)}
-                title={dutyName}
-                content={description}
-              />
-            </ListItemSecondaryAction>
           </ListItem>
         );
       })}
     </List>
   );
-};
-
-const completedByStyles = {
-  fontStyle: "italic"
 };
 
 const CompletedBy = ({ activeCompletedDuty, id, admin = true }) =>
