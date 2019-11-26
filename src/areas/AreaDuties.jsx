@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
+import EditIcon from "@material-ui/icons/Edit";
 import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
@@ -23,9 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   addCircle: {
     position: "sticky",
-    height: 40,
-    width: 40,
-    top: 30
+    height: 20,
+    width: 20,
+    top: 20
   },
   listItem: {
     width: "100%"
@@ -66,38 +67,43 @@ export default props => {
   return (
     <List className={classes.root}>
       {landDuties.map(landDuty => {
-        const { id, duty, activeCompletedDuty } = landDuty;
+        const { id: landDutyId, duty, activeCompletedDuty } = landDuty;
+        const { dutyName } = duty;
         const { name, description } = duty;
         const completed = !!activeCompletedDuty;
         return (
           <ListItem
-            key={id}
+            key={landDutyId}
             className={classes.listItem}
             dense
             button
             onClick={e =>
               completed
                 ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
-                : checkMutation(createcompletedDuty, landDuty.id, userId)
+                : checkMutation(createcompletedDuty, landDutyId, userId)
             }
           >
             <ListItemIcon>
               <Checkbox edge="start" checked={completed} disableRipple />
             </ListItemIcon>
             <TaskName
-              landDutyId={id}
+              landDutyId={landDutyId}
               shouldLineThrough={!!activeCompletedDuty}
               className={classes.checked}
               name={name}
             />
-            <CompletedBy activeCompletedDuty={activeCompletedDuty} id={id} />
+            <CompletedBy
+              activeCompletedDuty={activeCompletedDuty}
+              id={landDutyId}
+            />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="comments" />
-              <InfoIcon onClick={e => toggleInfoDialogue(landDuty.id)} />
+              <IconButton aria-label="comments">
+                <InfoIcon onClick={e => toggleInfoDialogue(landDutyId)} />
+              </IconButton>
               <AreaDutyDescriptionDialog
-                open={activeId === landDuty.id}
+                open={activeId === landDutyId}
                 onClose={() => toggleInfoDialogue(false)}
-                title={landDuty.duty.name}
+                title={dutyName}
                 content={description}
               />
             </ListItemSecondaryAction>
@@ -112,10 +118,13 @@ const completedByStyles = {
   fontStyle: "italic"
 };
 
-const CompletedBy = ({ activeCompletedDuty, id }) =>
+const CompletedBy = ({ activeCompletedDuty, id, admin = true }) =>
   activeCompletedDuty && (
-    <ListItemText id={id} style={completedByStyles}>
-      <div>{`Expires at ${defaultFormat(activeCompletedDuty.expiresAt)}`}</div>
+    <ListItemText id={id} style={{}} edge="end">
+      <div style={{ textAlign: "center" }}>
+        {`Expires `}
+        <i>{defaultFormat(activeCompletedDuty.expiresAt)}</i>
+      </div>
     </ListItemText>
   );
 

@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {
     width: "100%"
+  },
+  marginLeftBox: {
+    marginLeft: "auto"
   }
 }));
 
@@ -38,13 +41,13 @@ export default ({ land }) => {
   const [openModal, toggleAddDutyModal] = useState(false);
   const { loading, error, data } = useQuery(dutiesQuery);
   if (error || loading) return <Loading />;
-  const { landDuties } = land;
+  const { landDuties, id: landId } = land;
   const duties = (data && prune(data.duties)) || [];
-
   return (
     <Container className={classes.root}>
       <Grid className={classes.grid}>
         {duties.map((duty, idx) => {
+          const { id: dutyId } = duty;
           const maybeLandDuty = dutyIsOnLand(duty, landDuties);
           return (
             <Paper className={classes.paper} key={dutyKey(duty, idx)}>
@@ -53,24 +56,17 @@ export default ({ land }) => {
                   <Typography>{duty.name}</Typography>
                 </Box>
                 <Box flexGrow={1} />
-                <Box flexGrow={1} style={{ marginLeft: "auto" }}></Box>
+                <Box flexGrow={1} className={classes.marginLeftBox} />
                 <Switch
                   checked={!!maybeLandDuty}
                   onChange={() => {
-                    console.log(maybeLandDuty);
-                    maybeLandDuty
-                      ? deleteLandDuty({
-                          variables: {
-                            input: {
-                              landDutyId: maybeLandDuty.id
-                            }
-                          }
-                        })
-                      : createLandDuty({
-                          variables: {
-                            input: { landId: land.id, dutyId: duty.id }
-                          }
-                        });
+                    toggleChecked(
+                      maybeLandDuty,
+                      landId,
+                      dutyId,
+                      createLandDuty,
+                      deleteLandDuty
+                    );
                   }}
                   value="checkedB"
                   color="primary"
@@ -84,4 +80,26 @@ export default ({ land }) => {
       <AddDutyModal open={openModal} close={() => toggleAddDutyModal(false)} />
     </Container>
   );
+};
+
+const toggleChecked = (
+  maybeLandDuty,
+  landId,
+  dutyId,
+  createLandDuty,
+  deleteLandDuty
+) => {
+  maybeLandDuty
+    ? deleteLandDuty({
+        variables: {
+          input: {
+            landDutyId: maybeLandDuty.id
+          }
+        }
+      })
+    : createLandDuty({
+        variables: {
+          input: { landId, dutyId }
+        }
+      });
 };
