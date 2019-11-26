@@ -1,46 +1,28 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    marginTop: 8,
-    fontSize: 10
+    minWidth: 275,
+    minHeight: 25,
+    textAlign: "center"
   }
 });
 
 export default ({ area }) => {
   const classes = useStyles();
+  const { name: areaName } = area;
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Area
-        </Typography>
+    <>
+      <Paper className={classes.card}>
         <Typography variant="h3" component="h3">
-          {area.name}
+          {areaName}
         </Typography>
-        {/* <Typography className={classes.pos}>
-            Last Mowed November 10, 2019 by Jacob Haug
-            </Typography> */}
-      </CardContent>
-    </Card>
+      </Paper>
+      <Divider />
+    </>
   );
 };
