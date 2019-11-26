@@ -3,7 +3,7 @@ import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { Container } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
-export default ({ history }) => (
+export default ({ history, title = "Go Back" }) => (
   <>
     <Container
       style={{
@@ -13,7 +13,7 @@ export default ({ history }) => (
       }}
     >
       <KeyboardBackspaceIcon onClick={_e => history.goBack()} />
-      <Typography style={{ marginLeft: 20 }}>Go Back</Typography>
+      <Typography style={{ marginLeft: 20 }}>{title}</Typography>
     </Container>
   </>
 );

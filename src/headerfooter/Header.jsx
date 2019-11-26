@@ -24,6 +24,7 @@ const Header = props => (
 );
 
 const getNameFromRoute = props => {
+  console.log(props);
   if (props.location.pathname.match(/\/areas\/.+/)) {
     return <GoBack history={props.history} />;
   }
