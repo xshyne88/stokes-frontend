@@ -7,7 +7,6 @@ export default gql`
     name
     latitude
     longitude
-    lastCompletedDuty
     landDuties {
       edges {
         node {

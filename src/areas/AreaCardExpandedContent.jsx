@@ -11,7 +11,7 @@ export default props => {
             ld.duty.name +
               " " +
               "was completed by: " +
-              ld.activeCompletedDuty.lastCompletedBy}
+              ld.activeCompletedDuty.user.name}
         </Typography>
       ))}
     </CardContent>

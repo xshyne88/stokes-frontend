@@ -65,7 +65,8 @@ export default ({ land }) => {
         const { duty } = ld;
         const { name: dutyName } = duty;
         const { activeCompletedDuty } = ld;
-        const { lastCompletedBy, createdAt, expiresAt } = activeCompletedDuty;
+        const { user, createdAt, expiresAt } = activeCompletedDuty;
+        const { name: userName } = user;
         return (
           <ListItem key={ld.id} className={classes.item} icon={<InfoIcon />}>
             <ListItemText
@@ -74,7 +75,7 @@ export default ({ land }) => {
                   {dutyName}
                 </Typography>
               }
-              secondary={`by ${lastCompletedBy} on ${smallFormat(createdAt)}`}
+              secondary={`by ${userName} on ${smallFormat(createdAt)}`}
             />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker

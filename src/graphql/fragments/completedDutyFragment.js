@@ -1,8 +1,12 @@
 import gql from "graphql-tag";
+import userFragment from "./userFragment";
 
 export default gql`
   fragment completedDutyFragment on CompletedDuty {
     id
+    user {
+      ...userFragment
+    }
     expiresAt
     expired
     createdAt
@@ -16,6 +20,6 @@ export default gql`
         name
       }
     }
-    lastCompletedBy
   }
+    ${userFragment}
 `;
