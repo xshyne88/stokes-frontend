@@ -22,7 +22,7 @@ const Admin = () => {
       label: "Task Name"
     },
     {
-      name: "lastCompletedBy",
+      name: "user.name",
       label: "Completed By"
     },
     {
@@ -46,10 +46,10 @@ const Admin = () => {
   ];
 
   const completedDuties = prune(data.completedDuties);
-  // console.log(completedDuties);
   const options = {
     filterType: "checkbox"
   };
+  console.log(completedDuties);
   return (
     <>
       <Grid>

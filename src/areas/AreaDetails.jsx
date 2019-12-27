@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Loading from "../components/Loading";
 import LoadError from "../components/LoadError";
 import { useQuery } from "@apollo/react-hooks";
@@ -7,7 +7,7 @@ import Area from "./Area";
 import prune from "../prune";
 import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
 import AddCircle from "@material-ui/icons/AddCircle";
-// import { UserContext } from "../UserProvider";
+import { UserContext } from "../UserProvider";
 import AddAreaLandDutiesDialog from "./dialogs/AddAreaLandDutiesDialog";
 import Tabs from "./Tabs";
 
@@ -15,6 +15,8 @@ export default props => {
   const landId = props.match.params.id;
   const classes = useStyles();
   const [openDialog, toggleDialog] = useState(false);
+  const { user } = useContext(UserContext);
+  const { isAdmin } = user;
   const { loading, error, data } = useQuery(LAND_DETAILS_QUERY, {
     variables: { landId }
   });
@@ -28,7 +30,7 @@ export default props => {
       <div>
         <Area area={land} />
         <Tabs land={land} />
-        {true && (
+        {isAdmin && (
           <>
             <AddCircle
               color={"primary"}

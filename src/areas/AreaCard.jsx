@@ -54,6 +54,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const getProgressColor = percentage => {
+  if (percentage < 25) return "#c94c4c";
+  if (percentage < 50) return "#eea29a";
+  if (percentage < 75) return "#86af49";
+  return "#405d27";
+};
+
 const ellipsify = (name, length = 14) => {
   if (name.length >= length) {
     return `${name.slice(0, length)}..`;
@@ -65,11 +72,11 @@ const ellipsify = (name, length = 14) => {
 const BorderLinearProgress = withStyles({
   root: {
     height: 10,
-    backgroundColor: lighten("#ff6c5c", 0.5)
+    backgroundColor: lighten("#82b74b", 0.5)
   },
   bar: {
     borderRadius: 20,
-    backgroundColor: "#ff6c5c"
+    backgroundColor: "#82b74b"
   }
 })(LinearProgress);
 
@@ -105,6 +112,8 @@ export default props => {
   const { lastCompletedDuty } = land;
   const { landDuties } = land;
   const percentageComplete = getPercentageOfDutiesCompleted(landDuties);
+  console.log(percentageComplete);
+  const progressColor = getProgressColor(percentageComplete);
 
   return (
     <Card className={classes.card}>
@@ -128,9 +137,14 @@ export default props => {
       />
 
       <BorderLinearProgress
-        style={{ marginLeft: 30, marginRight: 30, width: "75%" }}
+        style={{
+          color: progressColor,
+          backgroundColor: lighten(progressColor, 0.5),
+          marginLeft: 30,
+          marginRight: 30,
+          width: "75%"
+        }}
         variant="determinate"
-        color="secondary"
         value={percentageComplete}
       />
       <CardContent>

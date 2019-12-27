@@ -31,8 +31,8 @@ const getOldTokens = () => {
   }
 };
 
-const javascriptSucks = val => val !== "null" && val !== "undefined" && val;
 const nonNull = val => javascriptSucks(val);
+const javascriptSucks = val => val !== "null" && val !== "undefined" && val;
 
 const Login = props => {
   const { user, setUser } = useContext(UserContext);

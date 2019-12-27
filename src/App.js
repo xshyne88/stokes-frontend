@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
 import Login from "./auth/Login";
 import HomeMap from "./map/HomeMap";
-import Admin from "./admin/Admin";
+import History from "./admin/History";
 import { AuthProvider } from "./auth/AuthProvider";
 import Logout from "./auth/Logout";
-import Account from "./account/Account";
+import Users from "./account/Users";
 import Areas from "./areas/Areas";
 import AreaDetails from "./areas/AreaDetails";
 
@@ -20,8 +20,8 @@ const App = () => {
         <PrivateRoute exact path="/map" component={HomeMap} />
         <PrivateRoute exact path="/areas/:id" component={AreaDetails} />
         <PrivateRoute exact path="/areas" component={Areas} />
-        <PrivateRoute exact path="/admin" component={Admin} />
-        <PrivateRoute exact path="/account" component={Account} />
+        <PrivateRoute exact path="/history" component={History} />
+        <PrivateRoute exact path="/users" component={Users} />
         <PrivateRoute exact path="/logout" component={Logout} />
         {/* <Route component={NoMatch} /> */}
       </AuthProvider>

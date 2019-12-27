@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -7,6 +7,7 @@ import AreasIcon from "@material-ui/icons/VerticalSplitSharp";
 import MapIcon from "@material-ui/icons/CropOriginalSharp";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserProvider";
 import HistoryIcon from "@material-ui/icons/History";
 
 const useStyles = makeStyles({
@@ -26,17 +27,25 @@ const capitalize = str => str.replace(/^\w/, c => c.toUpperCase());
 const routes = [
   { route: "areas", icon: <AreasIcon /> },
   { route: "map", icon: <MapIcon /> },
-  { route: "account", icon: <PersonIcon /> },
-  { route: "admin", icon: <HistoryIcon /> }
+  { route: "history", icon: <HistoryIcon /> },
+  { route: "users", icon: <PersonIcon /> }
 ];
 
+const adminRoutes = (isAdmin, routes) => {
+  if (isAdmin) return routes;
+  return routes.filter(route => route.route !== "users");
+};
+
 const BottomNav = props => {
+  const { user } = useContext(UserContext);
+  const { isAdmin } = user;
   const classes = useStyles();
   const currentRoute = props.location.pathname.slice(1);
+  const filteredRoutes = adminRoutes(isAdmin, routes);
 
   return (
     <BottomNavigation value={currentRoute} className={classes.root}>
-      {routes.map(({ route, icon }) => (
+      {filteredRoutes.map(({ route, icon }) => (
         <BottomNavigationAction
           key={route}
           label={capitalize(route)}
