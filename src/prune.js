@@ -14,29 +14,21 @@ const prune = (data, nodeName = "node") => {
   if (dataType === "boolean") return data;
   if (dataType !== "object") return data;
 
-  // if data has a node by either the nodeName or node, return its value in its place.
   const dataNodeName = data[nodeName];
   if (dataNodeName) return prune(dataNodeName, nodeName);
 
   const { node } = data;
   if (node) return prune(node, nodeName);
 
-  // if data has edges, return the edges in its place.
   const { edges } = data;
   if (edges) return prune(edges, nodeName);
 
-  // if data is an array, map over it and prune as you go.
   if (Array.isArray(data)) return data.map(field => prune(field, nodeName));
 
-  // otherwise, data is a non-connection object.  Traverse its key:values and prune as you go.
   return Object.keys(data).reduce((acc, key) => {
     acc[key] = prune(data[key], nodeName);
     return acc;
   }, {});
-
-  // Object.keys(data).forEach((key) => {
-  //   data[key] = prune(data[key], nodeName);
-  // });
 };
 
 export default prune;
