@@ -23,7 +23,6 @@ const App = () => {
         <PrivateRoute exact path="/history" component={History} />
         <PrivateRoute exact path="/users" component={Users} />
         <PrivateRoute exact path="/logout" component={Logout} />
-        {/* <Route component={NoMatch} /> */}
       </AuthProvider>
     </Router>
   );

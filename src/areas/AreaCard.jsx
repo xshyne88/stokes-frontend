@@ -18,6 +18,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { lighten, withStyles } from "@material-ui/core/styles";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import ClearIcon from "@material-ui/icons/Clear";
+import { getPercentageOfDutiesCompleted, getProgressColor } from "../helpers";
 
 const useStyles = makeStyles(theme => ({
   card: { width: "100%" },
@@ -54,13 +55,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getProgressColor = percentage => {
-  if (percentage < 25) return "#c94c4c";
-  if (percentage < 50) return "#eea29a";
-  if (percentage < 75) return "#86af49";
-  return "#405d27";
-};
-
 const ellipsify = (name, length = 14) => {
   if (name.length >= length) {
     return `${name.slice(0, length)}..`;
@@ -93,15 +87,6 @@ const AreaCardTitle = ({ land, lastCompletedDuty }) => (
     )}
   </div>
 );
-
-const getPercentageOfDutiesCompleted = landDuties => {
-  const { length } = landDuties;
-  const done = landDuties.reduce(
-    (acc, ld) => (ld.activeCompletedDuty ? acc + 1 : acc),
-    0
-  );
-  return (done / length) * 100;
-};
 
 export default props => {
   const classes = useStyles();

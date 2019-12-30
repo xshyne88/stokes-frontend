@@ -1,9 +1,9 @@
 import React from "react";
 import { Marker } from "react-map-gl";
+import { getPercentageOfDutiesCompleted, getProgressColor } from "../helpers";
 
 const BoxStyle = {
   margin: "30",
-  backgroundColor: "green",
   border: "1px solid black",
   padding: "10",
   opacity: ".7",
@@ -12,14 +12,17 @@ const BoxStyle = {
 
 const textStyle = { color: "white" };
 
-export default ({ latitude, longitude, name, setActiveLand, landId }) => {
+export default ({ land, latitude, longitude, name, setActiveLand, landId }) => {
   const long = parseFloat(longitude);
   const lat = parseFloat(latitude);
+  const { landDuties } = land;
+  const percentage = getPercentageOfDutiesCompleted(landDuties);
+  const progressColor = getProgressColor(percentage);
   if (!lat || !long) return null;
   return (
     <Marker latitude={lat} longitude={long}>
       <div
-        style={BoxStyle}
+        style={{ ...BoxStyle, backgroundColor: progressColor }}
         onClick={e => {
           setActiveLand(landId);
         }}

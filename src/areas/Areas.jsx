@@ -12,6 +12,7 @@ import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
+    marginBottom: 36,
     width: "100%",
     backgroundColor: theme.palette.background.default,
     display: "flex",
