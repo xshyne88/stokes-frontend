@@ -7,7 +7,9 @@ const BoxStyle = {
   border: "1px solid black",
   padding: "10",
   opacity: ".7",
-  filter: "alpha(opacity=60)"
+  filter: "alpha(opacity=60)",
+  height: 100,
+  width: 100
 };
 
 const textStyle = { color: "white" };
@@ -19,6 +21,7 @@ export default ({ land, latitude, longitude, name, setActiveLand, landId }) => {
   const percentage = getPercentageOfDutiesCompleted(landDuties);
   const progressColor = getProgressColor(percentage);
   if (!lat || !long) return null;
+  console.log(land.name, long, lat);
   return (
     <Marker latitude={lat} longitude={long}>
       <div
