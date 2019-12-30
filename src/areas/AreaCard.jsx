@@ -82,7 +82,9 @@ const BorderLinearProgress = withStyles({
 
 const AreaCardTitle = ({ land, lastCompletedDuty }) => (
   <div>
-    <Link to={`areas/${land.id}`}>{land.name}</Link>
+    <Link style={{ fontSize: 26 }} to={`areas/${land.id}`}>
+      {land.name}
+    </Link>
     {lastCompletedDuty && (
       <div style={{ display: "flex" }}>
         <i>Most Recent Activity: </i>

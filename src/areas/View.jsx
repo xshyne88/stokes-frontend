@@ -14,6 +14,7 @@ import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { smallFormat } from "../components/DateDisplay";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import ExpirationDatePicker from "./ExpirationDatePicker";
 import dayjs from "dayjs";
 
 const useStyles = makeStyles(theme => ({
@@ -35,11 +36,13 @@ export default ({ land }) => {
   const [activeId, toggleInfoDialogue] = React.useState(false);
 
   const { landDuties } = land;
+  const incompletedDuties = incompleted(landDuties);
+  const completedDuties = completed(landDuties);
   return (
     <List className={classes.root}>
       <ListSubheader>Incomplete</ListSubheader>
       <Divider />
-      {incompleted(landDuties).map(ld => {
+      {incompletedDuties.map(ld => {
         const { duty, id: landDutyId } = ld;
         const { name: dutyName, description } = duty;
         return (
@@ -64,19 +67,13 @@ export default ({ land }) => {
       })}
       <ListSubheader>Completed</ListSubheader>
       <Divider />
-      {completed(landDuties).map(ld => {
+      {completedDuties.map(ld => {
         const { duty } = ld;
         const { name: dutyName } = duty;
         const { activeCompletedDuty } = ld;
         const { user, createdAt, expiresAt } = activeCompletedDuty;
-        const { name: userName } = user;
-        const [selectedDate, setSelectedDate] = React.useState(
-          dayjs(expiresAt)
-        );
 
-        const handleDateChange = date => {
-          setSelectedDate(date);
-        };
+        const { name: userName } = user;
 
         return (
           <ListItem key={ld.id} className={classes.item} icon={<InfoIcon />}>
@@ -88,18 +85,10 @@ export default ({ land }) => {
               }
               secondary={`by ${userName} on ${smallFormat(createdAt)}`}
             />
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker
-                style={{ marginBottom: 10 }}
-                label={<div>Resets on</div>}
-                value={selectedDate}
-                format="MMMM d yy"
-                onChange={handleDateChange}
-              />
-            </MuiPickersUtilsProvider>
-            <Button onClick={e => console.log(selectedDate)}>
-              Set new expiration
-            </Button>
+            <ExpirationDatePicker
+              expiresAt={expiresAt}
+              completedDutyId={activeCompletedDuty.id}
+            />
           </ListItem>
         );
       })}
