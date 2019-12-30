@@ -1,6 +1,7 @@
 import React from "react";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import dayjs from "dayjs";
 
 export default props => {
   return (
@@ -10,8 +11,10 @@ export default props => {
           {ld.activeCompletedDuty &&
             ld.duty.name +
               " " +
-              "was completed by: " +
-              ld.activeCompletedDuty.user.name}
+              "----------------- " +
+              ld.activeCompletedDuty.user.name +
+              " on: " +
+              dayjs(ld.createdAt).format("M-D-YY")}
         </Typography>
       ))}
     </CardContent>
