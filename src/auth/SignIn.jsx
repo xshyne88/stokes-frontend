@@ -13,7 +13,7 @@ const loginFunc = (props, email, password) =>
     .login({
       variables: { input: { email: email, password: password } }
     })
-    .then(e => console.log(e))
+    .then(e => e)
     .catch(e => console.error(e));
 
 const useStyles = makeStyles(theme => ({
@@ -53,6 +53,11 @@ const LoginForm = props => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <img
+        alt="wsp main logo"
+        style={{ margin: 16, maxHeight: 150, width: "100%" }}
+        src={logo}
+      />
       <CssBaseline />
       <div className={classes.paper}>
         <Typography
@@ -103,11 +108,6 @@ const LoginForm = props => {
             <Grid item></Grid>
           </Grid>
         </form>
-        <img
-          alt="whatever"
-          style={{ margin: 16, maxHeight: 150, width: "100%" }}
-          src={logo}
-        />
       </div>
       <div>
         guest credentials
