@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
+import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
@@ -13,6 +14,8 @@ import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { smallFormat } from "../components/DateDisplay";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import dayjs from "dayjs";
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -67,6 +70,14 @@ export default ({ land }) => {
         const { activeCompletedDuty } = ld;
         const { user, createdAt, expiresAt } = activeCompletedDuty;
         const { name: userName } = user;
+        const [selectedDate, setSelectedDate] = React.useState(
+          dayjs(expiresAt)
+        );
+
+        const handleDateChange = date => {
+          setSelectedDate(date);
+        };
+
         return (
           <ListItem key={ld.id} className={classes.item} icon={<InfoIcon />}>
             <ListItemText
@@ -81,10 +92,14 @@ export default ({ land }) => {
               <DatePicker
                 style={{ marginBottom: 10 }}
                 label={<div>Resets on</div>}
-                value={smallFormat(expiresAt)}
+                value={selectedDate}
                 format="MMMM d yy"
+                onChange={handleDateChange}
               />
             </MuiPickersUtilsProvider>
+            <Button onClick={e => console.log(selectedDate)}>
+              Set new expiration
+            </Button>
           </ListItem>
         );
       })}
