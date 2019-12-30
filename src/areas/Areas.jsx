@@ -8,6 +8,7 @@ import LoadError from "../components/LoadError.jsx";
 import Loading from "../components/Loading.jsx";
 import prune from "../prune";
 import LANDS_QUERY from "../graphql/queries/landsQuery";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,31 @@ export default () => {
 
   return (
     <List className={classes.root}>
+      <ListItem className={classes.listItem} key={"announcements"}>
+        <Typography>
+          General notes:
+          <Typography>
+            - Maintenance of a given section includes maintaining the property
+            line in addition to the grave spaces. Easements/borders in a given
+            section need to be maintained alongside the grave spaces. For
+            example, when maintaining sections K, J, H, &amp; G, the 10 or so
+            feet from the last row to the green brick boundary wall of Mt.
+          </Typography>
+          <Typography>
+            - Pleasant church also needs to be maintained. When maintaining the
+            vacant land, this includes the area around the storage container and
+            along the fence line of the church.
+          </Typography>
+          <Typography>
+            - Maintenance of a given section also includes picking up the
+            cemetery road and any access roads in that section.
+          </Typography>
+          <Typography>
+            - The front of the cemetery (along Bruton boulevard) needs to be
+            picked up on an as needed basis. Passerby’s often throw trash here
+          </Typography>
+        </Typography>
+      </ListItem>
       {lands.map(land => (
         <ListItem className={classes.listItem} key={land.id}>
           <AreaCard land={land} />

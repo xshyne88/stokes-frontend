@@ -79,36 +79,4 @@ export default cache =>
     //     }
     //   }
     // }
-    // AssignLandDutiesMutation: {
-    //   landDetailsQuery: ({ mutation, query }) => {
-    //     try {
-    //       const newEdges = query.result.
-    //       );
-    //       return produce(query.result, draftResult => {
-    //         const landDutyId = mutation.variables.input.landDutyId;
-    //         draftResult.land.landDuties.edges = newEdges
-    //       });
-    //     } catch (e) {
-    //       console.error(e);
-    //       return query.result;
-    //     }
-    //   }
-    // },
   });
-
-//   ReturnBook: {
-//     MyCheckedOutBooks: ({ mutation, query }) => {
-//       try {
-//         const { bookId } = mutation.variables.input;
-//         const index = query.result.myCheckedOutBooks.edges
-//           .map(edge => edge.node.book.id)
-//           .indexOf(bookId);
-//         return produce(query.result, draftResult => {
-//           draftResult.myCheckedOutBooks.edges.splice(index, 1);
-//         });
-//       } catch {
-//         return query;
-//       }
-//     },
-//   },
-// });
