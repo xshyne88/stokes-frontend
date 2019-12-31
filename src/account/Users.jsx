@@ -6,8 +6,8 @@ import Loading from "../components/Loading";
 import LoadError from "../components/LoadError";
 import USERS_QUERY from "../graphql/queries/usersQuery";
 import setPasswordMutation from "../graphql/mutations/setPasswordMutation";
+import AddUserDialog from "./AddUserDialog";
 import List from "@material-ui/core/List";
-import Button from "@material-ui/core/Button";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,6 +19,9 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,9 +39,11 @@ export default () => {
   const { error, data } = useQuery(USERS_QUERY);
   const [setPassword] = useMutation(setPasswordMutation);
   const [activeId, setActiveId] = useState(0);
+  const [addUserDialog, toggleAddUserDialog] = useState(false);
   if (error) return <LoadError />;
   if (!data) return <Loading />;
   const { users } = prune(data);
+  console.log(addUserDialog);
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
@@ -53,6 +58,17 @@ export default () => {
   };
   return (
     <div className={classes.root}>
+      <Fab
+        variant="extended"
+        aria-label="like"
+        className={classes.fab}
+        onClick={() => toggleAddUserDialog(true)}
+        onClose={() => toggleAddUserDialog(false)}
+      >
+        <AddIcon className={classes.extendedIcon} />
+        Add User
+      </Fab>
+      <AddUserDialog open={addUserDialog} />
       <List>
         {users.map(user => (
           <ListItem key={user.email}>
@@ -109,14 +125,18 @@ export default () => {
                 />
               </>
             ) : (
-              <Button
+              <Fab
+                variant="extended"
+                aria-label="like"
+                className={classes.fab}
                 onClick={_ => {
                   setActiveId(user.id);
                   setValues({ ...values, password: "" });
                 }}
               >
-                Change Password
-              </Button>
+                <EditIcon className={classes.extendedIcon} />
+                Change Pwd
+              </Fab>
             )}
           </ListItem>
         ))}
