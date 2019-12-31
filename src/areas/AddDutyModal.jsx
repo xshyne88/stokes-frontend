@@ -24,7 +24,7 @@ const handleFormikSubmit = async (
 ) => {
   const { name, description, estimatedDays, mutation } = values;
 
-  const result = await mutation({
+  mutation({
     variables: {
       input: {
         name,
@@ -62,9 +62,6 @@ export default ({ open, close }) => {
     estimatedDays: 14,
     mutation: createDuty
   };
-  // const createDuty => ({
-  //   variables: { input: { name: "stuff", description: "mo stuff" } }
-  // });
 
   return (
     <Formik
@@ -94,10 +91,6 @@ export default ({ open, close }) => {
                 onChange={handleChange}
                 className={classes.tf}
                 inputProps={{ className: classes.tf }}
-                // onBlur={handleBlur}
-                // helperText={
-                //   errors.name && touched.name && errors.name
-                // }
               />
               <TextField
                 error={errors.description}
@@ -107,8 +100,6 @@ export default ({ open, close }) => {
                 onChange={handleChange}
                 className={classes.tf}
                 inputProps={{ className: classes.tf }}
-                // onBlur={handleBlur}
-                // helperText={errors.description && touched.description && errors.description}
               />
               <Button onClick={handleSubmit}>Add Task</Button>
             </div>

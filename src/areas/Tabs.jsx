@@ -6,10 +6,12 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import AreaDuties from "./AreaDuties";
 import Visibility from "@material-ui/icons/Visibility";
+import AreaDuties from "./AreaDuties";
+import AreaNotes from "./AreaNotes";
 import View from "./View";
 import EditIcon from "@material-ui/icons/Edit";
+import EventNoteIcon from "@material-ui/icons/EventNote";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 export default ({ land }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,7 +70,8 @@ export default ({ land }) => {
           aria-label="full width tabs example"
         >
           <Tab label="View" {...a11yProps(0)} icon={<Visibility />} />
-          <Tab label="Complete" {...a11yProps(1)} icon={<EditIcon />} />
+          <Tab label="Notes" {...a11yProps(1)} icon={<EventNoteIcon />} />
+          <Tab label="Complete" {...a11yProps(2)} icon={<EditIcon />} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -80,6 +83,9 @@ export default ({ land }) => {
           <View land={land} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
+          <AreaNotes landDuties={land.landDuties} />
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
           <AreaDuties landDuties={land.landDuties} />
         </TabPanel>
       </SwipeableViews>

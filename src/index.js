@@ -15,7 +15,7 @@ import getWatchedMutationLink from "./watchMutationLink";
 import "./index.css";
 
 const realApi = "http://stokes-graveyard.cf/graphql";
-const devApi = "http://localhost:3000/graphql";
+/* const devApi = "http://localhost:3000/graphql"; */
 
 const httpLink = new HttpLink({ uri: realApi });
 

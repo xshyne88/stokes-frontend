@@ -38,7 +38,7 @@ export default () => {
   return (
     <List className={classes.root}>
       <ListItem className={classes.listItem} key={"announcements"}>
-        <Typography>
+        <div>
           General notes:
           <Typography>
             - Maintenance of a given section includes maintaining the property
@@ -60,7 +60,7 @@ export default () => {
             - The front of the cemetery (along Bruton boulevard) needs to be
             picked up on an as needed basis. Passerby’s often throw trash here
           </Typography>
-        </Typography>
+        </div>
       </ListItem>
       {lands.map(land => (
         <ListItem className={classes.listItem} key={land.id}>

@@ -8,6 +8,9 @@ export default gql`
     createdAt
     estimatedDays
     status
+    notes {
+      edges { node { id createdBy body }}
+}
     activeCompletedDuty {
       ...completedDutyFragment
     }

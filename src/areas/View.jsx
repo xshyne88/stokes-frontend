@@ -1,7 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,34 +10,19 @@ import { IconButton } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { smallFormat } from "../components/DateDisplay";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import ExpirationDatePicker from "./ExpirationDatePicker";
-import dayjs from "dayjs";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper
-  },
-  item: {
-    minHeight: 50,
-    display: "flex"
-  }
-}));
 
 const completed = items => items.filter(i => !!i.activeCompletedDuty);
 const incompleted = items => items.filter(i => !i.activeCompletedDuty);
 
 export default ({ land }) => {
-  const classes = useStyles();
   const [activeId, toggleInfoDialogue] = React.useState(false);
 
   const { landDuties } = land;
   const incompletedDuties = incompleted(landDuties);
   const completedDuties = completed(landDuties);
   return (
-    <List className={classes.root}>
+    <List style={{ width: "100%" }}>
       <ListSubheader>Incomplete</ListSubheader>
       <Divider />
       {incompletedDuties.map(ld => {
@@ -76,7 +59,11 @@ export default ({ land }) => {
         const { name: userName } = user;
 
         return (
-          <ListItem key={ld.id} className={classes.item} icon={<InfoIcon />}>
+          <ListItem
+            key={ld.id}
+            style={{ minHeight: 50, display: "flex" }}
+            icon={<InfoIcon />}
+          >
             <ListItemText
               primary={
                 <Typography style={{ textDecoration: "line-through" }}>
