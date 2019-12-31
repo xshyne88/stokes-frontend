@@ -6,14 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Area from "./Area";
 import prune from "../prune";
 import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
-import AddCircle from "@material-ui/icons/AddCircle";
 import { UserContext } from "../UserProvider";
 import AddAreaLandDutiesDialog from "./dialogs/AddAreaLandDutiesDialog";
 import Tabs from "./Tabs";
 
 export default props => {
   const landId = props.match.params.id;
-  const classes = useStyles();
   const [openDialog, toggleDialog] = useState(false);
   const { user } = useContext(UserContext);
   const { isAdmin } = user;
@@ -29,14 +27,9 @@ export default props => {
     return (
       <div>
         <Area area={land} />
-        <Tabs land={land} />
+        <Tabs land={land} toggleDialog={toggleDialog} />
         {isAdmin && (
           <>
-            <AddCircle
-              color={"primary"}
-              className={classes.addCircle}
-              onClick={e => toggleDialog(true)}
-            />
             <AddAreaLandDutiesDialog
               open={openDialog}
               onClose={() => toggleDialog(false)}

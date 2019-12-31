@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -45,6 +47,15 @@ export default ({ land }) => {
   const duties = (data && prune(data.duties)) || [];
   return (
     <Container className={classes.root}>
+      <Fab
+        variant="extended"
+        aria-label="like"
+        className={classes.fab}
+        onClick={() => toggleAddDutyModal(true)}
+      >
+        <AddIcon className={classes.extendedIcon} />
+        Add New Task
+      </Fab>
       <Grid className={classes.grid}>
         {duties.map((duty, idx) => {
           const { id: dutyId } = duty;
@@ -76,7 +87,6 @@ export default ({ land }) => {
           );
         })}
       </Grid>
-      <Button onClick={() => toggleAddDutyModal(true)}>Add Task</Button>
       <AddDutyModal open={openModal} close={() => toggleAddDutyModal(false)} />
     </Container>
   );

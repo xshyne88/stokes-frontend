@@ -1,5 +1,7 @@
 import React from "react";
 import SwipeableViews from "react-swipeable-views";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -45,10 +47,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default ({ land }) => {
+export default ({ land, toggleDialog }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -80,6 +82,15 @@ export default ({ land }) => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
+          <Fab
+            variant="extended"
+            aria-label="like"
+            className={classes.fab}
+            onClick={toggleDialog}
+          >
+            <AddIcon className={classes.extendedIcon} />
+            Add New Task
+          </Fab>
           <View land={land} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

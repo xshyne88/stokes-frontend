@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 
 const handleFormikSubmit = async (
   values,
-  { setSubmitting, setErrors, setStatus, children }
+  { close, setSubmitting, setErrors, setStatus, children }
 ) => {
   const { name, description, estimatedDays, mutation } = values;
 
@@ -32,7 +32,9 @@ const handleFormikSubmit = async (
         estimatedDays
       }
     }
-  });
+  })
+    .then(e => close())
+    .catch(e => console.error(e));
   return setSubmitting ? <Loading /> : { children };
 };
 
@@ -67,7 +69,9 @@ export default ({ open, close }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleFormikSubmit}
+      onSubmit={(values, stuff) =>
+        handleFormikSubmit(values, { ...stuff, close: close })
+      }
     >
       {({ handleSubmit, isSubmitting, errors, values, handleChange }) => (
         <Modal
