@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import landDutyFragment from "./landDutyFragment";
+import noteFragment from "./noteFragment";
 
 export default gql`
   fragment LandFragment on Land {
@@ -14,6 +15,14 @@ export default gql`
         }
       }
     }
+    notes {
+      edges {
+        node {
+          ...noteFragment
+        }
+      }
+    }
   }
   ${landDutyFragment}
+  ${noteFragment}
 `;

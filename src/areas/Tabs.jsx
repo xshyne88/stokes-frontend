@@ -83,7 +83,7 @@ export default ({ land }) => {
           <View land={land} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <AreaNotes landDuties={land.landDuties} />
+          <AreaNotes land={land} />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <AreaDuties landDuties={land.landDuties} />

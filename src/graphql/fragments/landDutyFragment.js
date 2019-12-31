@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import dutyFragment from "./dutyFragment";
 import completedDutyFragment from "./completedDutyFragment";
+import noteFragment from "./noteFragment";
 
 export default gql`
   fragment LandDutyFragment on LandDuty {
@@ -9,8 +10,12 @@ export default gql`
     estimatedDays
     status
     notes {
-      edges { node { id createdBy body }}
-}
+      edges {
+        node {
+          ...noteFragment
+        }
+      }
+    }
     activeCompletedDuty {
       ...completedDutyFragment
     }
@@ -19,5 +24,6 @@ export default gql`
     }
   }
   ${dutyFragment}
+  ${noteFragment}
   ${completedDutyFragment}
 `;

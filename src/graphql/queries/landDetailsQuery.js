@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import landDutyFragment from "../fragments/landDutyFragment";
+import noteFragment from "../fragments/noteFragment";
 
 export default gql`
   query landDetailsQuery($landId: ID!) {
@@ -8,6 +9,13 @@ export default gql`
       name
       latitude
       longitude
+      notes {
+        edges {
+          node {
+            ...noteFragment
+          }
+        }
+      }
       landDuties {
         edges {
           node {
@@ -17,5 +25,6 @@ export default gql`
       }
     }
   }
+  ${noteFragment}
   ${landDutyFragment}
 `;
