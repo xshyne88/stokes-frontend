@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import { useQuery, useMutation } from "react-apollo";
 import prune from "../prune";

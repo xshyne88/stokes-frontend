@@ -6,7 +6,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import ScrollHider from "../components/ScrollHider";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 
 import GoBack from "./GoBack";
