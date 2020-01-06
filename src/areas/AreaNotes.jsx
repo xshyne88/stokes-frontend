@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import FabButton from "../components/FabButton";
 import List from "@material-ui/core/List";
-import Button from "@material-ui/core/Button";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Card from "@material-ui/core/Card";
@@ -37,51 +35,33 @@ export default ({ land }) => {
   const handleChange = e => changeText(e.target.value);
   const handleCreateNote = () => {
     if (textInput === "") return;
-    createLandNote({
-      variables: { input: { landId: land.id, body: textInput } }
-    })
-      .then(e => toggleAddNote(false))
-      .catch(e => console.error(e));
+    doCreateLandNote(land, textInput, toggleAddNote, createLandNote);
   };
-  console.log(showTextField);
   return (
     <>
       {showTextField ? (
-        <>
-          <TextField
-            style={{ width: "100%" }}
-            id="outlined-multiline-flexible"
-            label={`Note for ${land.name}`}
-            multiline
-            rowsMax="10"
-            value={textInput}
-            onChange={handleChange}
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-          />
-          <Button onClick={handleCreateNote}>Add Note</Button>
-        </>
+        <AddNoteUI
+          className={classes.root}
+          land={land}
+          textInput={textInput}
+          handleChange={handleChange}
+          handleCreateNote={handleCreateNote}
+        />
       ) : (
-        <Fab
-          variant="extended"
-          aria-label="like"
-          className={classes.fab}
+        <FabButton
           onClick={() => toggleAddNote(true)}
-        >
-          <AddIcon className={classes.extendedIcon} />
-          Add Note
-        </Fab>
+          text={"Create New Note"}
+        />
       )}
       <List className={classes.root}>
         {notes &&
           notes.map(n => (
-            <ListItem>
+            <ListItem key={n.id}>
               <Card className={classes.root}>
                 <CardHeader
                   title={
                     <ListItemText
-                      primary={n.createdBy.name}
+                      primary={n.createdBy.name || n.createdBy.email}
                       secondary={dayjs(n.createdAt).format("MMM DD YYYY")}
                     />
                   }
@@ -95,4 +75,36 @@ export default ({ land }) => {
       </List>
     </>
   );
+};
+
+const AddNoteUI = ({
+  land,
+  textInput,
+  handleChange,
+  handleCreateNote,
+  className
+}) => (
+  <>
+    <TextField
+      className={className}
+      style={{ width: "100%" }}
+      id="outlined-multiline-flexible"
+      label={`Note for ${land.name}`}
+      multiline
+      rowsMax="10"
+      value={textInput}
+      onChange={handleChange}
+      margin="normal"
+      variant="outlined"
+    />
+    <FabButton onClick={handleCreateNote} text={"Add Note"} />
+  </>
+);
+
+const doCreateLandNote = (land, textInput, toggleAddNote, createLandNote) => {
+  createLandNote({
+    variables: { input: { landId: land.id, body: textInput } }
+  })
+    .then(e => toggleAddNote(false))
+    .catch(e => console.error(e));
 };

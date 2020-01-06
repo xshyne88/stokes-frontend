@@ -1,5 +1,4 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import LandMarker from "./map/LandMarker";
 import LoadError from "./components/LoadError";

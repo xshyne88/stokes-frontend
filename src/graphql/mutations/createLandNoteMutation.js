@@ -7,6 +7,9 @@ export default gql`
       land {
         ...LandFragment
       }
+      errors {
+        message
+      }
     }
   }
   ${landFragment}

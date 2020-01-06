@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactMapGL from "react-map-gl";
 import { AllLands } from "../Lands";
-import LandMarker from "./LandMarker";
 
 const mapBoxToken =
   "pk.eyJ1IjoiY2hhc2Vob21lZGVjb3IiLCJhIjoiY2prc201OThhMDFncjNrcnkwcXQxOXdlaCJ9.fIGVk5GP3iIh0-GFP7Oqzg";
@@ -22,12 +21,12 @@ export default ({ setActiveLand }) => {
       maxZoom={20}
       minZoom={16.2}
       bearing={-90}
-      draggable={true}
-      dragRotate={true}
       mapStyle={mapStyle}
       mapboxApiAccessToken={mapBoxToken}
+      draggable
+      dragRotate
       onViewportChange={viewport => {
-        const { latitude, longitude, zoom } = viewport;
+        const { latitude, longitude } = viewport;
         setLatitude(latitude);
         setLongitude(longitude);
       }}
@@ -37,6 +36,7 @@ export default ({ setActiveLand }) => {
   );
 };
 
+/* import LandMarker from "./LandMarker"; */
 /*
  * <LandMarker
  * longitude={lat}

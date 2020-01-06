@@ -15,9 +15,8 @@ import ExpirationDatePicker from "./ExpirationDatePicker";
 const completed = items => items.filter(i => !!i.activeCompletedDuty);
 const incompleted = items => items.filter(i => !i.activeCompletedDuty);
 
-export default ({ land }) => {
+export default ({ land, toggleDialog }) => {
   const [activeId, toggleInfoDialogue] = React.useState(false);
-
   const { landDuties } = land;
   const incompletedDuties = incompleted(landDuties);
   const completedDuties = completed(landDuties);

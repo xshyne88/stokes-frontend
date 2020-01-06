@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import Loading from "../components/Loading";
 import LoadError from "../components/LoadError";
 import { useQuery } from "@apollo/react-hooks";
-import { makeStyles } from "@material-ui/core/styles";
 import Area from "./Area";
 import prune from "../prune";
 import LAND_DETAILS_QUERY from "../graphql/queries/landDetailsQuery";
@@ -23,11 +22,16 @@ export default props => {
   if (error) return <LoadError />;
 
   if (data && data.land) {
+    console.log(isAdmin);
     const { land } = prune(data);
     return (
       <div>
         <Area area={land} />
-        <Tabs land={land} toggleDialog={toggleDialog} />
+        <Tabs
+          land={land}
+          toggleDialog={() => toggleDialog(true)}
+          isAdmin={isAdmin}
+        />
         {isAdmin && (
           <>
             <AddAreaLandDutiesDialog
@@ -42,17 +46,3 @@ export default props => {
     );
   }
 };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100vw",
-    backgroundColor: theme.palette.background.paper
-  },
-  addCircle: {
-    bottom: 75,
-    position: "absolute",
-    right: 30,
-    height: 100,
-    width: 100
-  }
-}));

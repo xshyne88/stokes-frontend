@@ -11,6 +11,9 @@ export default gql`
       completedDuty {
         ...completedDutyFragment
       }
+      errors {
+        message
+      }
     }
   }
   ${landFragment}

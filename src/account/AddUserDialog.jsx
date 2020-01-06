@@ -13,17 +13,25 @@ import { TextField, Button } from "@material-ui/core";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(),
-  email: Yup.string().required,
-  password: Yup.string().required
+  email: Yup.string().required(),
+  password: Yup.string().required()
 });
+
+const hasError = ({ data }) => {
+  const { createUser } = data;
+  const { errors } = createUser;
+  if (errors.length) return true;
+  return false;
+};
 
 const handleFormikSubmit = async (
   values,
-  { close, setSubmitting, setErrors, setStatus, children }
+  { close, setSubmitting, setErrors, setStatus, children, createUser }
 ) => {
-  const { name, email, password, mutation } = values;
+  console.log(values);
+  const { name, email, password } = values;
 
-  mutation({
+  createUser({
     variables: {
       input: {
         name,
@@ -32,7 +40,11 @@ const handleFormikSubmit = async (
       }
     }
   })
-    .then(e => close())
+    .then(e => {
+      if (!hasError(e)) {
+        close();
+      }
+    })
     .catch(e => console.error(e));
   return setSubmitting ? <Loading /> : { children };
 };
@@ -55,6 +67,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({ open, close }) => {
+  console.log(close, "clos");
   const [createUser] = useMutation(createUserMutation);
   const classes = useStyles();
   const initialValues = {
@@ -68,7 +81,11 @@ export default ({ open, close }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, stuff) =>
-        handleFormikSubmit(values, { ...stuff, close: close })
+        handleFormikSubmit(values, {
+          ...stuff,
+          close: close,
+          createUser: createUser
+        })
       }
     >
       {({ handleSubmit, isSubmitting, errors, values, handleChange }) => (
@@ -78,9 +95,7 @@ export default ({ open, close }) => {
           onClose={close}
           closeAfterTransition
           BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500
-          }}
+          BackdropProps={{ timeout: 500 }}
         >
           <Fade in={open}>
             <div className={classes.paper}>
@@ -95,7 +110,7 @@ export default ({ open, close }) => {
                 inputProps={{ className: classes.tf }}
               />
               <TextField
-                error={errors.email}
+                error={!!errors.email}
                 label="email"
                 name="email"
                 value={values.email}
@@ -104,7 +119,7 @@ export default ({ open, close }) => {
                 inputProps={{ className: classes.tf }}
               />
               <TextField
-                error={errors.password}
+                error={!!errors.password}
                 label="password"
                 name="password"
                 value={values.password}

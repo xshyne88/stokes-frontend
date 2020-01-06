@@ -49,7 +49,6 @@ const Admin = () => {
   const options = {
     filterType: "checkbox"
   };
-  console.log(completedDuties);
   return (
     <>
       <Grid>

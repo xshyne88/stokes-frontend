@@ -68,7 +68,10 @@ export default () => {
         <AddIcon className={classes.extendedIcon} />
         Add User
       </Fab>
-      <AddUserDialog open={addUserDialog} />
+      <AddUserDialog
+        open={addUserDialog}
+        close={() => toggleAddUserDialog(false)}
+      />
       <List>
         {users.map(user => (
           <ListItem key={user.email}>

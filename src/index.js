@@ -14,22 +14,24 @@ import { login } from "./auth/helpers";
 import getWatchedMutationLink from "./watchMutationLink";
 import "./index.css";
 
-const realApi = "http://stokes-graveyard.cf/graphql";
-/* const devApi = "http://localhost:3000/graphql"; */
+// const realApi = "http://stokes-graveyard.cf/graphql";
+const devApi = "http://localhost:3000/graphql";
 
-const httpLink = new HttpLink({ uri: realApi });
+const httpLink = new HttpLink({ uri: devApi });
+
+const isFalsy = target => target === "null" || target === "undefined";
+
+const addAuthorization = (headers, token) => ({
+  headers: {
+    ...headers,
+    Authorization: token
+  }
+});
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("access-token") || "";
-  if (token === "null" || token === "undefined") return { headers: headers };
-  if (token) {
-    return {
-      headers: {
-        ...headers,
-        Authorization: token
-      }
-    };
-  }
+  if (isFalsy(token)) return { headers: headers };
+  if (token) return addAuthorization(headers, token);
 });
 
 const errorLink = onError(
