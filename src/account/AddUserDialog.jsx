@@ -28,7 +28,6 @@ const handleFormikSubmit = async (
   values,
   { close, setSubmitting, setErrors, setStatus, children, createUser }
 ) => {
-  console.log(values);
   const { name, email, password } = values;
 
   createUser({
@@ -67,7 +66,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({ open, close }) => {
-  console.log(close, "clos");
   const [createUser] = useMutation(createUserMutation);
   const classes = useStyles();
   const initialValues = {

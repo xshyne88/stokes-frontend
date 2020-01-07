@@ -22,7 +22,6 @@ export default props => {
   if (error) return <LoadError />;
 
   if (data && data.land) {
-    console.log(isAdmin);
     const { land } = prune(data);
     return (
       <div>

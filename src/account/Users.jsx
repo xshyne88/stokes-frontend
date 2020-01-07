@@ -43,7 +43,6 @@ export default () => {
   if (error) return <LoadError />;
   if (!data) return <Loading />;
   const { users } = prune(data);
-  console.log(addUserDialog);
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });

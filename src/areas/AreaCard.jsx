@@ -99,7 +99,6 @@ export default props => {
   const { lastCompletedDuty } = land;
   const { landDuties } = land;
   const percentageComplete = getPercentageOfDutiesCompleted(landDuties);
-  console.log(percentageComplete);
   const progressColor = getProgressColor(percentageComplete);
 
   return (
