@@ -47,26 +47,23 @@ const LoginForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("submitting: ", email, password);
     loginFunc(props, email, password);
   };
 
   return (
     <Container component="main" maxWidth="xs">
-      <img
-        alt="wsp main logo"
-        style={{ margin: 16, maxHeight: 150, width: "100%" }}
-        src={logo}
-      />
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography
-          component="h1"
-          variant="h3"
-          style={{ fontFamily: "Monaco" }}
-        >
-          Sign in
-        </Typography>
+        <img
+          alt="wsp main logo"
+          style={{
+            margin: 0,
+            maxHeight: 200,
+            width: "100%",
+            paddingRight: 50
+          }}
+          src={logo}
+        />
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -74,7 +71,7 @@ const LoginForm = props => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Name"
             name="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -109,12 +106,9 @@ const LoginForm = props => {
           </Grid>
         </form>
       </div>
-      <div>
-        guest credentials
-        <br />
-        username: chase@chase.com
-        <br />
-        password: abc12345
+      <div style={{ fontSize: 8 }}>
+        Please email any feedback, questions, concerns or support to
+        chasehomedecor@gmail.com
       </div>
     </Container>
   );

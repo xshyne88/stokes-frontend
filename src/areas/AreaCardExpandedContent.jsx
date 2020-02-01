@@ -14,7 +14,7 @@ export default props => {
               "----------------- " +
               ld.activeCompletedDuty.user.name +
               " on: " +
-              dayjs(ld.createdAt).format("M-D-YY")}
+              dayjs(ld.activeCompletedDuty.createdAt).format("M-D-YY")}
         </Typography>
       ))}
     </CardContent>

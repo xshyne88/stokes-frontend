@@ -9,7 +9,9 @@ import Loading from "../components/Loading";
 import LoadError from "../components/LoadError";
 
 const Admin = () => {
-  const { error, data } = useQuery(COMPLETED_DUTIES_QUERY);
+  const { error, data } = useQuery(COMPLETED_DUTIES_QUERY, {
+    variables: { sortBy: "CREATED_AT", sortDirection: "DESC" }
+  });
   if (error) return <LoadError />;
   if (!data) return <Loading />;
   const columns = [
@@ -19,7 +21,7 @@ const Admin = () => {
     },
     {
       name: "landDuty.duty.name",
-      label: "Task Name"
+      label: "Task"
     },
     {
       name: "user.name",
@@ -47,7 +49,8 @@ const Admin = () => {
 
   const completedDuties = prune(data.completedDuties);
   const options = {
-    filterType: "checkbox"
+    filterType: "checkbox",
+    rowsPerPage: 100
   };
   return (
     <>
