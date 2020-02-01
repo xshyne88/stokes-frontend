@@ -43,7 +43,7 @@ const getNameFromRoute = props => {
   if (props.location.pathname.match(/\/areas\/.+/)) {
     return <GoBack history={props.history} />;
   }
-  return `Washington State Park Maintenance`;
+  return `Washington Park Cemetary Maintenance`;
 };
 
 export default withRouter(Header);
