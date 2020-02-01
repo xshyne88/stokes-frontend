@@ -94,7 +94,7 @@ export default props => {
             }))}
             min={1}
             max={30}
-            style={{ width: "50%", height: 100, top: 50 }}
+            style={{ width: "100%", height: 100, top: 50 }}
           />
         </>
       ) : (
