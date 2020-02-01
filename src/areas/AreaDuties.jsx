@@ -79,19 +79,19 @@ export default props => {
             style={{ height: "75%", padding: 8, margin: 10 }}
           />
           <Typography style={{ margin: 10, padding: 8 }}>
-            Renewal Period
+            Renewal Period (Tapping is easier than sliding on mobile) Set number
+            of days from today for expiration
           </Typography>
           <Slider
             value={sliderValue}
-            onChange={(e, value) => setSlider(value)}
+            onChange={(e, value) => {
+              e.stopPropagation();
+              setSlider(value);
+            }}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="on"
-            getAriaValueText={v => `${v}`}
+            getAriaValueText={v => `${v} Days`}
             step={1}
-            marks={Array.from(Array(30), (_, index) => index + 1).map(v => ({
-              label: v,
-              value: v
-            }))}
             min={1}
             max={30}
             style={{ width: "100%", height: 100, top: 50 }}
