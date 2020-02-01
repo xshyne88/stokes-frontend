@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -11,6 +13,11 @@ import { getUserId } from "../helpers";
 import { defaultFormat } from "../components/DateDisplay";
 import deleteCompletedDutyMutation from "../graphql/mutations/deleteCompletedDutyMutation";
 import createCompletedDutyMutation from "../graphql/mutations/createCompletedDutyMutation";
+import dayjs from "dayjs";
+import FabButton from "../components/FabButton";
+import EventIcon from "@material-ui/icons/Event";
+import InfoIcon from "@material-ui/icons/Info";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,12 +48,13 @@ const unCheckMutation = (deletecompletedDuty, completedDutyId) =>
     }
   });
 
-const checkMutation = (createcompletedDuty, landDutyId, userId) =>
+const checkMutation = (createcompletedDuty, landDutyId, userId, expiresAt) =>
   createcompletedDuty({
     variables: {
       input: {
         landDutyId,
-        userId
+        userId,
+        expiresAt
       }
     }
   });
@@ -58,41 +66,90 @@ export default props => {
   const classes = useStyles();
   const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
   const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
+  const [sliderValue, setSlider] = useState(14);
+  const [useSlider, toggleUseSlider] = useState(false);
   return (
-    <List className={classes.root}>
-      {landDuties.map(landDuty => {
-        const { id: landDutyId, duty, activeCompletedDuty } = landDuty;
-        const { name } = duty;
-        const completed = !!activeCompletedDuty;
-        return (
-          <ListItem
-            key={landDutyId}
-            className={classes.listItem}
-            dense
-            button
-            onClick={e =>
-              completed
-                ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
-                : checkMutation(createcompletedDuty, landDutyId, userId)
-            }
-          >
-            <ListItemIcon>
-              <Checkbox edge="start" checked={completed} disableRipple />
-            </ListItemIcon>
-            <TaskName
-              landDutyId={landDutyId}
-              shouldLineThrough={!!activeCompletedDuty}
-              className={classes.checked}
-              name={name}
-            />
-            <CompletedBy
-              activeCompletedDuty={activeCompletedDuty}
-              id={landDutyId}
-            />
-          </ListItem>
-        );
-      })}
-    </List>
+    <>
+      {useSlider ? (
+        <>
+          <FabButton
+            onClick={() => toggleUseSlider(false)}
+            text={"Use Default Period"}
+            Icon={EventIcon}
+            style={{ height: "75%", padding: 8, margin: 10 }}
+          />
+          <Typography style={{ margin: 10, padding: 8 }}>
+            Renewal Period
+          </Typography>
+          <Slider
+            value={sliderValue}
+            onChange={(e, value) => setSlider(value)}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="on"
+            getAriaValueText={v => `${v}`}
+            step={1}
+            marks={Array.from(Array(30), (_, index) => index + 1).map(v => ({
+              label: v,
+              value: v
+            }))}
+            min={1}
+            max={30}
+            style={{ width: "50%", height: 100, top: 50 }}
+          />
+        </>
+      ) : (
+        <>
+          <FabButton
+            onClick={() => toggleUseSlider(true)}
+            text={"Set Renewal Period Before Marking"}
+            Icon={EventIcon}
+            style={{ height: "75%", padding: 8, margin: 10 }}
+          />
+          <Typography style={{ fontSize: 10, padding: 8, margin: 10 }}>
+            Set a custom number of days before the task expires
+          </Typography>
+        </>
+      )}
+      <List className={classes.root}>
+        {landDuties.map(landDuty => {
+          const { id: landDutyId, duty, activeCompletedDuty } = landDuty;
+          const { name } = duty;
+          const completed = !!activeCompletedDuty;
+          return (
+            <ListItem
+              key={landDutyId}
+              className={classes.listItem}
+              dense
+              button
+              onClick={e =>
+                completed
+                  ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
+                  : checkMutation(
+                      createcompletedDuty,
+                      landDutyId,
+                      userId,
+                      useSlider ? dayjs().add(sliderValue, "days") : undefined
+                    )
+              }
+            >
+              <ListItemIcon>
+                <Checkbox edge="start" checked={completed} disableRipple />
+              </ListItemIcon>
+              <TaskName
+                landDutyId={landDutyId}
+                shouldLineThrough={!!activeCompletedDuty}
+                className={classes.checked}
+                name={name}
+              />
+              <CompletedBy
+                activeCompletedDuty={activeCompletedDuty}
+                id={landDutyId}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+    </>
   );
 };
 

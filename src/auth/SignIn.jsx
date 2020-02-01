@@ -3,7 +3,6 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import logo from "../logo.jpg";
@@ -13,7 +12,7 @@ const loginFunc = (props, email, password) =>
     .login({
       variables: { input: { email: email, password: password } }
     })
-    .then(e => e)
+    .then(e => {})
     .catch(e => console.error(e));
 
 const useStyles = makeStyles(theme => ({
