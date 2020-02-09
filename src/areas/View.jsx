@@ -11,17 +11,18 @@ import InfoIcon from "@material-ui/icons/Info";
 import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { smallFormat } from "../components/DateDisplay";
 import ExpirationDatePicker from "./ExpirationDatePicker";
+import ExpirationDialog from "./dialogs/ExpirationDialog";
 
 const completed = items => items.filter(i => !!i.activeCompletedDuty);
 const incompleted = items => items.filter(i => !i.activeCompletedDuty);
 
 export default ({ land, toggleDialog }) => {
-  const [activeId, toggleInfoDialogue] = React.useState(false);
+  const [activeId, toggleInfoDialogue] = React.useState("TGFuZER1dHktNw==");
   const { landDuties } = land;
   const incompletedDuties = incompleted(landDuties);
   const completedDuties = completed(landDuties);
   return (
-    <List style={{ width: "100%" }}>
+    <List style={{ width: "100%", padding: 0, margin: 0 }}>
       <ListSubheader>Incomplete</ListSubheader>
       <Divider />
       {incompletedDuties.map(ld => {
@@ -32,7 +33,7 @@ export default ({ land, toggleDialog }) => {
             <ListItemText primary={dutyName} />
             <ListItemSecondaryAction>
               <IconButton
-                aria-label="comments"
+                aria-label="info"
                 onClick={e => toggleInfoDialogue(landDutyId)}
               >
                 <InfoIcon />
@@ -50,34 +51,45 @@ export default ({ land, toggleDialog }) => {
       <ListSubheader>Completed</ListSubheader>
       <Divider />
       {completedDuties.map(ld => {
-        const { duty } = ld;
+        const { duty, id: landDutyId } = ld;
         const { name: dutyName } = duty;
         const { activeCompletedDuty } = ld;
-        const { user, createdAt, expiresAt } = activeCompletedDuty;
-
+        const { user, createdAt } = activeCompletedDuty;
         const { name: userName } = user;
-
         return (
-          <ListItem
-            key={ld.id}
-            style={{ minHeight: 50, display: "flex" }}
-            icon={<InfoIcon />}
-          >
+          <ListItem key={ld.id} style={listItemStyles} icon={<InfoIcon />}>
             <ListItemText
               primary={
-                <Typography style={{ textDecoration: "line-through" }}>
-                  {dutyName}
-                </Typography>
+                <Typography style={typographyStyles}>{dutyName}</Typography>
               }
               secondary={`by ${userName} on ${smallFormat(createdAt)}`}
             />
-            <ExpirationDatePicker
-              expiresAt={expiresAt}
-              completedDutyId={activeCompletedDuty.id}
-            />
+            <ListItemSecondaryAction>
+              <IconButton
+                aria-label="info"
+                onClick={e => toggleInfoDialogue(landDutyId)}
+              >
+                <InfoIcon />
+              </IconButton>
+              <ExpirationDialog
+                open={activeId === landDutyId}
+                onClose={() => toggleInfoDialogue(false)}
+                title={dutyName}
+                activeCompletedDuty={activeCompletedDuty}
+              ></ExpirationDialog>
+            </ListItemSecondaryAction>
           </ListItem>
         );
       })}
     </List>
   );
+};
+
+const typographyStyles = {
+  textDecoration: "line-through"
+};
+
+const listItemStyles = {
+  minHeight: 50,
+  display: "flex"
 };

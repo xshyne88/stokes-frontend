@@ -16,8 +16,6 @@ import createCompletedDutyMutation from "../graphql/mutations/createCompletedDut
 import dayjs from "dayjs";
 import FabButton from "../components/FabButton";
 import EventIcon from "@material-ui/icons/Event";
-import InfoIcon from "@material-ui/icons/Info";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -93,7 +91,7 @@ export default props => {
             getAriaValueText={v => `${v} Days`}
             step={1}
             min={1}
-            max={30}
+            max={14}
             style={{ width: "100%", height: 100, top: 50 }}
           />
         </>

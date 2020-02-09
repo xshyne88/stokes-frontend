@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useMutation } from "react-apollo";
@@ -10,7 +9,18 @@ export default ({ expiresAt, completedDutyId }) => {
   const [selectedDate, setSelectedDate] = React.useState(dayjs(expiresAt));
 
   const handleDateChange = date => {
-    setSelectedDate(date);
+    updateCompletedDuty({
+      variables: {
+        input: {
+          completedDutyId,
+          completedDutyInput: {
+            expiresAt: date
+          }
+        }
+      }
+    })
+      .then(e => setSelectedDate(date))
+      .catch(e => console.error(e));
   };
 
   const [updateCompletedDuty] = useMutation(updateCompletedDutyMutation);
@@ -19,31 +29,17 @@ export default ({ expiresAt, completedDutyId }) => {
     <>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
-          style={{ marginBottom: 10 }}
-          label={<div>Resets on</div>}
+          style={pushUp}
+          label="Select a date"
           value={selectedDate}
           format="MMMM d yy"
           onChange={handleDateChange}
         />
       </MuiPickersUtilsProvider>
-      <Button
-        onClick={e =>
-          updateCompletedDuty({
-            variables: {
-              input: {
-                completedDutyId,
-                completedDutyInput: {
-                  expiresAt: selectedDate
-                }
-              }
-            }
-          })
-            .then(e => console.log(e))
-            .catch(e => console.error(e))
-        }
-      >
-        Set new expiration
-      </Button>
     </>
   );
+};
+
+const pushUp = {
+  marginBottom: 10
 };
