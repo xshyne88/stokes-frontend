@@ -10,7 +10,6 @@ import { IconButton } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import AreaDutyDescriptionDialog from "./dialogs/AreaDutyDescriptionDialog";
 import { smallFormat } from "../components/DateDisplay";
-import ExpirationDatePicker from "./ExpirationDatePicker";
 import ExpirationDialog from "./dialogs/ExpirationDialog";
 
 const completed = items => items.filter(i => !!i.activeCompletedDuty);
