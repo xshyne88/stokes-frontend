@@ -9,6 +9,13 @@ export default gql`
     createdAt
     estimatedDays
     status
+    completedDuties {
+      edges {
+        node {
+          ...completedDutyFragment
+        }
+      }
+    }
     notes {
       edges {
         node {

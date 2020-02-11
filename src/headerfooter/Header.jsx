@@ -34,7 +34,6 @@ const Header = props => {
           </AppBar>
         </div>
       </ScrollHider>
-      <Toolbar />
     </>
   );
 };

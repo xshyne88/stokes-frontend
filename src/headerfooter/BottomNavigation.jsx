@@ -8,7 +8,7 @@ import MapIcon from "@material-ui/icons/CropOriginalSharp";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserProvider";
-import HistoryIcon from "@material-ui/icons/History";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 
 const useStyles = makeStyles({
   root: {
@@ -22,12 +22,12 @@ const useStyles = makeStyles({
   }
 });
 
-const capitalize = str => str.replace(/^\w/, c => c.toUpperCase());
+export const capitalize = str => str.replace(/^\w/, c => c.toUpperCase());
 
 const routes = [
   { route: "areas", icon: <AreasIcon /> },
   { route: "map", icon: <MapIcon /> },
-  { route: "history", icon: <HistoryIcon /> },
+  { route: "history", icon: <AssessmentIcon /> },
   { route: "users", icon: <PersonIcon /> }
 ];
 
