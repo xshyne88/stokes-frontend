@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
+import {
+  List,
+  Slider,
+  Typography,
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Checkbox,
+} from "@material-ui/core";
 import { UserContext } from "../UserProvider";
 import { useMutation } from "react-apollo";
 import { getUserId } from "../helpers";
@@ -61,11 +63,13 @@ export default props => {
   const { landDuties } = props;
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
+  const { isAdmin } = user;
   const classes = useStyles();
   const [createcompletedDuty] = useMutation(createCompletedDutyMutation);
   const [deletecompletedDuty] = useMutation(deleteCompletedDutyMutation);
   const [sliderValue, setSlider] = useState(14);
   const [useSlider, toggleUseSlider] = useState(false);
+  console.log(isAdmin)
   return (
     <>
       {useSlider ? (
@@ -119,15 +123,19 @@ export default props => {
               className={classes.listItem}
               dense
               button
-              onClick={e =>
-                completed
-                  ? unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
-                  : checkMutation(
+              onClick={e => {
+                if(completed && isAdmin) {
+                  return unCheckMutation(deletecompletedDuty, activeCompletedDuty.id)
+                }
+                if(!completed) {
+                  checkMutation(
                       createcompletedDuty,
                       landDutyId,
                       userId,
                       useSlider ? dayjs().add(sliderValue, "days") : undefined
                     )
+                  }
+                }
               }
             >
               <ListItemIcon>
@@ -153,7 +161,7 @@ export default props => {
 
 const CompletedBy = ({ activeCompletedDuty, id, admin = true }) =>
   activeCompletedDuty && (
-    <ListItemText id={id} style={{}} edge="end">
+    <ListItemText id={id} edge="end">
       <div style={{ textAlign: "center" }}>
         {`Expires `}
         <i>{defaultFormat(activeCompletedDuty.expiresAt)}</i>

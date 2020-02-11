@@ -1,16 +1,19 @@
 import React, { useContext } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Slide from "@material-ui/core/Slide";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { useMutation } from "react-apollo";
-import createVerifiedCompletedDutyMutation from "../../graphql/mutations/createVerifiedCompletedDutyMutation";
-import createCompletedDutyMutation from "../../graphql/mutations/createCompletedDutyMutation";
+import dayjs from 'dayjs';
 import { getUserId } from "../../helpers";
 import { UserContext } from "../../UserProvider";
+import {
+  Button,
+  Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import createVerifiedCompletedDutyMutation from "../../graphql/mutations/createVerifiedCompletedDutyMutation";
+import createCompletedDutyMutation from "../../graphql/mutations/createCompletedDutyMutation";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -22,7 +25,8 @@ const createCd = (landDuty, userId, createCompletedDuty) => {
     variables: {
       input: {
         landDutyId,
-        userId
+        userId,
+        expiresAt: dayjs().add(7, "days"),
       }
     }
   });
@@ -39,6 +43,21 @@ const createVcd = (completedDutyId, createVerifiedCompletedDuty) => {
   });
 };
 
+  const handleConfirm = (landDuty, userId, onClose, createCompletedDuty, createVerifiedCompletedDuty) => {
+            const { completedDuties } = landDuty;
+            const previousCompletedDuties = completedDuties.length === 0;
+            if (previousCompletedDuties) {
+              createCd(landDuty, userId, createCompletedDuty)
+                .then(_ => onClose())
+                .catch(console.error);
+            } else {
+              const completedDutyId = completedDuties[0].id
+              createVcd(completedDutyId, createVerifiedCompletedDuty)
+                .then(_ => onClose())
+                .catch(console.error);
+            }
+          }
+
 export default function AlertDialog({ open, onClose, landDuty }) {
   const { duty, land } = landDuty;
   const { name: dutyName } = duty;
@@ -48,19 +67,18 @@ export default function AlertDialog({ open, onClose, landDuty }) {
     createVerifiedCompletedDutyMutation
   );
   const [createCompletedDuty] = useMutation(createCompletedDutyMutation);
-  console.log(landDuty);
-  const handleClose = () => console.log("foobar");
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       TransitionComponent={Transition}
       keepMounted
     >
       <DialogTitle id="foo">{dutyName} Verification</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {`By clicking confirm you are moving the task \`${dutyName}\` to the completed section.`}
+        <DialogContentText id="dialog-verification">
+          {`
+        "By clicking confirm you are noting that this task \`${dutyName}\` does not require immediate attention and the due date can be extended one week"`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -68,19 +86,7 @@ export default function AlertDialog({ open, onClose, landDuty }) {
           Close
         </Button>
         <Button
-          onClick={() => {
-            const { completedDuties } = landDuty;
-            const previousCompletedDuties = completedDuties.length === 0;
-            if (previousCompletedDuties) {
-              createCd(landDuty, userId, createCompletedDuty)
-                .then(_ => onClose())
-                .catch(console.error);
-            } else {
-              createVcd(completedDuties[0].id, createVerifiedCompletedDuty)
-                .then(_ => onClose())
-                .catch(console.error);
-            }
-          }}
+          onClick={() => handleConfirm(landDuty, userId, onClose, createCompletedDuty, createVerifiedCompletedDuty)}
           color="primary"
           autoFocus
         >
@@ -90,3 +96,4 @@ export default function AlertDialog({ open, onClose, landDuty }) {
     </Dialog>
   );
 }
+ 
