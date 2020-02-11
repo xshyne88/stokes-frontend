@@ -13,8 +13,8 @@ import { smallFormat } from "../components/DateDisplay";
 import ExpirationDialog from "./dialogs/ExpirationDialog";
 import VerifyDialog from "./dialogs/VerifyDialog";
 import LogDialog from "./dialogs/LogDialog";
-import VerifyIcon from "@material-ui/icons/BorderColor";
 import HistoryIcon from "@material-ui/icons/History";
+import VerifyIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const completed = items => items.filter(i => !!i.activeCompletedDuty);
 const incompleted = items => items.filter(i => !i.activeCompletedDuty);
