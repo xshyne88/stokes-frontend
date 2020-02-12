@@ -82,7 +82,11 @@ export default ({ land, toggleDialog, isAdmin }) => {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           {isAdmin && (
-            <FabButton onClick={toggleDialog} text={"Add New Task"} />
+            <FabButton
+              Icon={EditIcon}
+              onClick={toggleDialog}
+              text={"Edit Tasks"}
+            />
           )}
           <View land={land} />
         </TabPanel>

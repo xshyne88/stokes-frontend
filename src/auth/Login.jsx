@@ -52,7 +52,7 @@ const Login = props => {
 
   if (user) return <Redirect to="/areas" />;
   if (loading) return <Loading />;
-  if (error) return <p>An error occurred{console.log(error)}</p>;
+  if (error) return <p>An error occurred{console.error(error)}</p>;
   if (data) return <Redirect to="/areas" />;
   return <SignIn login={login} />;
 };

@@ -49,7 +49,7 @@ export default function AlertDialog({ open, onClose, landDuty }) {
   );
   const [createCompletedDuty] = useMutation(createCompletedDutyMutation);
   console.log(landDuty);
-  const handleClose = () => console.log("foobar");
+  const handleClose = () => {};
   return (
     <Dialog
       open={open}

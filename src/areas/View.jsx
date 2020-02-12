@@ -20,7 +20,7 @@ const completed = items => items.filter(i => !!i.activeCompletedDuty);
 const incompleted = items => items.filter(i => !i.activeCompletedDuty);
 const Secondary = ({ ld }) => (
   <>
-    <i>{`Every ${ld.estimatedDays} days`}</i>
+    <i>{`Every ${ld.duty.estimatedDays} days`}</i>
   </>
 );
 export default ({ land, toggleDialog }) => {
@@ -96,18 +96,20 @@ export default ({ land, toggleDialog }) => {
               secondary={`by ${userName} on ${smallFormat(createdAt)}`}
             />
             <ListItemSecondaryAction>
-              <IconButton
-                aria-label="info"
-                onClick={e => toggleInfoDialog(landDutyId)}
-              >
-                <InfoIcon />
-              </IconButton>
-              <ExpirationDialog
+              <ButtonGroup>
+                <IconButton
+                  aria-label="info"
+                  onClick={e => toggleLogDialog(landDutyId)}
+                >
+                  <HistoryIcon />
+                </IconButton>
+              </ButtonGroup>
+
+              <LogDialog
                 open={logId === landDutyId}
-                onClose={() => toggleInfoDialog(false)}
-                title={dutyName}
-                activeCompletedDuty={activeCompletedDuty}
-              ></ExpirationDialog>
+                onClose={() => toggleLogDialog(false)}
+                landDuty={ld}
+              />
             </ListItemSecondaryAction>
           </ListItem>
         );
@@ -143,3 +145,10 @@ const listItemStyles = {
 //     </ExpansionPanel>
 //   );
 // };
+
+/* <ExpirationDialog
+      open={logId === landDutyId}
+      onClose={() => toggleInfoDialog(false)}
+      title={dutyName}
+      activeCompletedDuty={activeCompletedDuty}
+    ></ExpirationDialog> */

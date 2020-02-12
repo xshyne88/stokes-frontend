@@ -41,7 +41,7 @@ export default ({ activeCompletedDuty, onClose, open, title }) => {
       <DialogTitle>
         <Typography>{title}</Typography>
         <div style={{ display: "flex" }}>
-          <Typography style={subTitleStyle} onClick={e => console.log(e)}>
+          <Typography style={subTitleStyle} onClick={e => {}}>
             Resets on {expiresAtDate}
           </Typography>
         </div>
@@ -85,7 +85,7 @@ export default ({ activeCompletedDuty, onClose, open, title }) => {
                 }
               }
             })
-              .then(e => console.log("success", e))
+              .then(e => {})
               .catch(err => console.error(err));
           }}
         >
