@@ -1,15 +1,19 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useMutation } from "react-apollo";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import createUserMutation from "../graphql/mutations/createUserMutation";
-import Fade from "../animations/Fade";
-import Divider from "@material-ui/core/Divider";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import Fade from "../animations/Fade";
+import {
+  makeStyles,
+  TextField,
+  Button,
+  Backdrop,
+  Modal,
+  Divider
+} from "@material-ui/core/";
+import createUserMutation from "../graphql/mutations/createUserMutation";
 import Loading from "../components/Loading";
-import { TextField, Button } from "@material-ui/core";
+import { callMutation } from "../helpers"
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -26,19 +30,11 @@ const hasError = ({ data }) => {
 
 const handleFormikSubmit = async (
   values,
-  { close, setSubmitting, setErrors, setStatus, children, createUser }
+  { close, setSubmitting, children, createUser }
 ) => {
   const { name, email, password } = values;
 
-  createUser({
-    variables: {
-      input: {
-        name,
-        email,
-        password
-      }
-    }
-  })
+  callMutation({mutation: createUser, input: {...values}})
     .then(e => {
       if (!hasError(e)) {
         close();
