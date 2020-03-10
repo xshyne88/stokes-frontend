@@ -14,6 +14,7 @@ const extractAccessTokenFromResponse = refreshResponse => {
 export const fetchNewAccessToken = refreshToken => {
   const url = "http://localhost:3000/graphql";
 
+
   return fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

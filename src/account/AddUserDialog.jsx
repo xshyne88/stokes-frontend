@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core/";
 import createUserMutation from "../graphql/mutations/createUserMutation";
 import Loading from "../components/Loading";
-import { callMutation } from "../helpers"
+import { callMutation } from "../helpers";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -33,8 +33,9 @@ const handleFormikSubmit = async (
   { close, setSubmitting, children, createUser }
 ) => {
   const { name, email, password } = values;
+  console.log(name, email, password);
 
-  callMutation({mutation: createUser, input: {...values}})
+  callMutation({ mutation: createUser, input: { ...values } })
     .then(e => {
       if (!hasError(e)) {
         close();

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useMutation } from "react-apollo";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { getUserId } from "../../helpers";
 import { UserContext } from "../../UserProvider";
 import {
@@ -10,7 +10,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  DialogTitle
 } from "@material-ui/core";
 import createVerifiedCompletedDutyMutation from "../../graphql/mutations/createVerifiedCompletedDutyMutation";
 import createCompletedDutyMutation from "../../graphql/mutations/createCompletedDutyMutation";
@@ -26,7 +26,7 @@ const createCd = (landDuty, userId, createCompletedDuty) => {
       input: {
         landDutyId,
         userId,
-        expiresAt: dayjs().add(7, "days"),
+        expiresAt: dayjs().add(7, "days")
       }
     }
   });
@@ -43,23 +43,29 @@ const createVcd = (completedDutyId, createVerifiedCompletedDuty) => {
   });
 };
 
-  const handleConfirm = (landDuty, userId, onClose, createCompletedDuty, createVerifiedCompletedDuty) => {
-            const { completedDuties } = landDuty;
-            const previousCompletedDuties = completedDuties.length === 0;
-            if (previousCompletedDuties) {
-              createCd(landDuty, userId, createCompletedDuty)
-                .then(_ => onClose())
-                .catch(console.error);
-            } else {
-              const completedDutyId = completedDuties[0].id
-              createVcd(completedDutyId, createVerifiedCompletedDuty)
-                .then(_ => onClose())
-                .catch(console.error);
-            }
-          }
+const handleConfirm = (
+  landDuty,
+  userId,
+  onClose,
+  createCompletedDuty,
+  createVerifiedCompletedDuty
+) => {
+  const { completedDuties } = landDuty;
+  const previousCompletedDuties = completedDuties.length === 0;
+  if (previousCompletedDuties) {
+    createCd(landDuty, userId, createCompletedDuty)
+      .then(_ => onClose())
+      .catch(console.error);
+  } else {
+    const completedDutyId = completedDuties[0].id;
+    createVcd(completedDutyId, createVerifiedCompletedDuty)
+      .then(_ => onClose())
+      .catch(console.error);
+  }
+};
 
 export default function AlertDialog({ open, onClose, landDuty }) {
-  const { duty, land } = landDuty;
+  const { duty } = landDuty;
   const { name: dutyName } = duty;
   const { user } = useContext(UserContext);
   const userId = getUserId(user);
@@ -67,7 +73,6 @@ export default function AlertDialog({ open, onClose, landDuty }) {
     createVerifiedCompletedDutyMutation
   );
   const [createCompletedDuty] = useMutation(createCompletedDutyMutation);
-  const handleClose = () => {};
   return (
     <Dialog
       open={open}
@@ -87,7 +92,15 @@ export default function AlertDialog({ open, onClose, landDuty }) {
           Close
         </Button>
         <Button
-          onClick={() => handleConfirm(landDuty, userId, onClose, createCompletedDuty, createVerifiedCompletedDuty)}
+          onClick={() =>
+            handleConfirm(
+              landDuty,
+              userId,
+              onClose,
+              createCompletedDuty,
+              createVerifiedCompletedDuty
+            )
+          }
           color="primary"
           autoFocus
         >
@@ -97,4 +110,3 @@ export default function AlertDialog({ open, onClose, landDuty }) {
     </Dialog>
   );
 }
- 
