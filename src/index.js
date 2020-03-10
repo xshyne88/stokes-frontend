@@ -14,8 +14,8 @@ import { login } from "./auth/helpers";
 import getWatchedMutationLink from "./watchMutationLink";
 import "./index.css";
 
-const realApi = "http://wpcmaintenance.com/graphql";
-// const devApi = "http://localhost:3000/graphql";
+const realApi = "http://web.wpcmaintenance.com/graphql";
+/* const devApi = "http://localhost:3000/graphql"; */
 
 const httpLink = new HttpLink({ uri: realApi });
 
